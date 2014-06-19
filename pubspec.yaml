@@ -1,0 +1,10 @@
+name: devtools
+version: 1.0.0
+authors:
+- Kenneth Endfinger <kaendfinger@gmail.com>
+description: DirectCode Development Tools
+homepage: https://github.com/DirectMyFile/devtools
+dependencies:
+  args: ">=0.11.0+1 <0.12.0"
+  http: ">=0.11.1+1 <0.12.0"
+  yaml: ">=0.10.0 <1.0.0"
