@@ -1,0 +1,4 @@
+#!/usr/bin/env dart
+import "package:devtools/devtools.dart";
+
+main(List<String> args) => grind.main(args);
