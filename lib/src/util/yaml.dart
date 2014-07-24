@@ -14,8 +14,7 @@ class YamlDumper {
 
   void dump(Object obj) {
     if (obj is Map) {
-      Map mp = obj;
-      this._dumpMap(mp);
+      _dumpMap(obj);
     }
   }
   
@@ -29,8 +28,10 @@ class YamlDumper {
         val = v;
       } else if (v is Map) {
         buffer.writeln(indentStr + k + ':');
-        this._dumpMap(v, indent + 1);
+        _dumpMap(v, indent + 2);
         return;
+      } else if (v is List) {
+        _dumpList(v, indent + 2);
       } else {
         val = v.toString();
       }
@@ -42,6 +43,24 @@ class YamlDumper {
       
       buffer.writeln(indentStr + k + ': ' + val);
     });
+  }
+  
+  void _dumpList(List list, [int indent = 0]) {
+    String indentStr = this._indentionString(indent);
+    String indentStrSub = this._indentionString(indent + 1);
+    for (var item in list) {
+      var val = "";
+      buffer.write("- ");
+      if (item is Map) {
+        _dumpMap(item, indent + 1);
+        continue;
+      } else if (item is String) {
+        val = item;
+      } else {
+        val = item.toString();
+      }
+      buffer.write(val);
+    }
   }
   
   String _indentionString(int indent) {
