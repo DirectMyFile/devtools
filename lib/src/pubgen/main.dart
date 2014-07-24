@@ -13,11 +13,6 @@ void execute(List<String> args) {
 }
 
 void pubgen() {
-  String prompt(String message) {
-    stdout.write(message);
-    return stdin.readLineSync();
-  }
-  
   var file = new File("pubspec.yaml");
   
   if (file.existsSync()) {
@@ -25,15 +20,72 @@ void pubgen() {
     exit(1);
   }
   
-  var name = prompt("[Name]: ");
-  var version = prompt("[Version]: ");
-  var description = prompt("[Description]: ");
-  
   var pubspec = {
-    "name": name,
-    "version": version,
-    "description": description
+    "name": prompt("[Name]: "),
+    "version": prompt("[Version]: "),
+    "description": prompt("[Description]: ")
   };
+  
+  if (yesOrNo("Do you want to add a homepage? ")) {
+    var homepage = prompt("[Homepage]: ");
+    if (homepage.trim() != "") {
+      pubspec["homepage"] = homepage;
+    } 
+  }
+  
+  if (yesOrNo("Do you have more than one author? ")) {
+    var authors = prompt("[Authors]: ");
+    if (authors.trim() != "") {
+      pubspec["authors"] = authors.split(",").map((it) => it.trim());
+    }
+  } else {
+    var author = prompt("[Author]: ");
+    if (author.trim() != "") {
+      pubspec["author"] = author;
+    }
+  }
+  
+  if (yesOrNo("Do you want to apply an SDK Constraint? ")) {
+    var sdk = prompt("[SDK Constraint]: ");
+    if (sdk.trim() != "") {
+      var env = pubspec["environment"] = {};
+      env['sdk'] = sdk;
+    }
+  }
+  
+  if (yesOrNo("Do you want to add a documentation url? ")) {
+    var url = prompt("[Documentation URL]: ");
+    if (url.trim() != "") {
+      pubspec['documentation'] = url;
+    }
+  }
+  
+  if (yesOrNo("Do you want to add dependencies? ")) {
+    var deps = pubspec["dependencies"] = {};
+    var add_more = true;
+    while (add_more) {
+      var name = prompt("[Dependency Name]: ");
+      
+      if (name.trim() == "") {
+        add_more = false;
+        continue;
+      }
+      
+      var version = prompt("[Dependency Version]: ");
+      
+      if (version.trim() == "") {
+        add_more = false;
+        continue;
+      }
+      
+      deps[name] = version;
+      
+      if (!yesOrNo("Do you want to add another dependency? ")) {
+        add_more = false;
+        continue;
+      }
+    }
+  }
   
   file.writeAsStringSync(dumpYaml(pubspec));
   
