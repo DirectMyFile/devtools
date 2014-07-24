@@ -1,5 +1,6 @@
 # Dart
 packages
+pubspec.lock
 
 # JetBrains IDE
 *.iml
