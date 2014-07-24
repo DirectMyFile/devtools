@@ -1,5 +1,4 @@
-import "dart:io";
-import "dart:async";
+part of devtools.util;
 
 typedef ErrorHandler(Exception err);
 typedef NotFoundHandler();
