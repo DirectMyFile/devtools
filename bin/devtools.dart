@@ -1,5 +1,5 @@
 #!/usr/bin/env dart
 
-import "package:devtools/pubgen.dart";
+import "package:devtools/cli.dart";
 
 main(List<String> args) => execute(args);
