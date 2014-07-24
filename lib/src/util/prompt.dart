@@ -7,5 +7,5 @@ String prompt(String message) {
 
 bool yesOrNo(String message) {
   var answer = prompt(message);
-  return ["yes", "y", "sure", "ok", "yep", "yeah"].contains(answer.toLowerCase());
+  return ["yes", "y", "sure", "ok", "yep", "yeah", "true", "yerp"].contains(answer.toLowerCase());
 }
