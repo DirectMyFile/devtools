@@ -15,6 +15,8 @@ void execute(List<String> args) {
     version();
   } else if (opts['help']) {
     printUsage(argp);
+  } else {
+    printUsage(argp);
   }
 }
 
