@@ -36,7 +36,7 @@ void pubgen() {
   if (yesOrNo("Do you have more than one author? ")) {
     var authors = prompt("[Authors]: ");
     if (authors.trim() != "") {
-      pubspec["authors"] = authors.split(",").map((it) => it.trim());
+      pubspec["authors"] = new List.from(authors.split(",").map((it) => it.trim()));
     }
   } else {
     var author = prompt("[Author]: ");
