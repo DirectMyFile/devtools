@@ -1,5 +1,5 @@
 # Dart
-packages/
+packages
 
 # JetBrains IDE
 *.iml
@@ -7,5 +7,4 @@ packages/
 
 # Dart Editor
 .project
-
-
+.settings
