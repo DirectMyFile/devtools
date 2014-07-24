@@ -4,6 +4,8 @@ import "dart:io";
 
 import "package:args/args.dart";
 
+import "util.dart";
+
 void execute(List<String> args) {
   var argp = new ArgParser();
   argp.addFlag("help", abbr: "h", help: "Prints this Help Message", negatable: false);
@@ -33,13 +35,13 @@ void pubgen() {
   var version = prompt("[Version]: ");
   var description = prompt("[Description]: ");
   
-  var pubspec = [
-    "name: ${name}",
-    "version: ${version}",
-    "description: ${description}"
-  ].join("\n");
+  var pubspec = {
+    "name": name,
+    "version": version,
+    "description": description
+  };
   
-  file.writeAsStringSync(pubspec);
+  file.writeAsStringSync(dumpYaml(pubspec));
   
   print("Generated pubspec.yaml");
 }
