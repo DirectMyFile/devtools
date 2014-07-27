@@ -80,7 +80,11 @@ void init_checks() {
   var readmes = ["README.md", "README", "README.txt"];
   var authors = ["AUTHORS", "AUTHORS.md"];
   var changelogs = ["CHANGELOG", "CHANGELOG.md"];
-  checks.add(new FileExists(readmes, info: "Checking for README", error: "No README Found", fix: "Create a README"));
-  checks.add(new FileExists(authors, info: "Checking for Authors File", warn: "No Authors File Found", fix: "Create an Authors file"));
-  checks.add(new FileExists(changelogs, info: "Checking for Changelog", warn: "No Changelog Found", fix: "Create a Changelog"));
+  var contributings = ["CONTRIBUTING", "CONTRIBUTING.md"];
+  var licenses = ["LICENSE", "LICENSE.md"];
+  checks.add(new FileExists(readmes, info: "Checking for README", error: "No README Found", fix: "Create a README about your project"));
+  checks.add(new FileExists(licenses, info: "Checking for License", error: "No License Found", fix: "Find a license suitable for your project at http://choosealicense.com/"));
+  checks.add(new FileExists(authors, info: "Checking for Authors File", warn: "No Authors File Found", fix: "Create an authors file with each author of your project"));
+  checks.add(new FileExists(changelogs, info: "Checking for Changelog", warn: "No Changelog Found", fix: "Create a changelog for your project with major changes"));
+  checks.add(new FileExists(contributings, info: "Checking for Contributing Guide", warn: "No Contributing Guide Found", fix: "Create a Contributing Guide with information about your development workflow"));
 }
