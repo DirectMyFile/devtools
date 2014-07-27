@@ -56,7 +56,8 @@ abstract class Check {
 class FileExists implements Check {
   @override
   final CheckType type;
-  List<String> filenames;
+  final List<String> filenames;
+  
   String error;
   String warn;
   String fix;
