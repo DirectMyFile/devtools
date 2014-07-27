@@ -3,6 +3,7 @@ part of devtools.dent;
 void execute(List<String> args) {
   var argp = new ArgParser();
   argp.addFlag("help", abbr: "h", help: "Prints this Help Message", negatable: false);
+  argp.addFlag("warn", abbr: "w", help: "Toggles Warnings", defaultsTo: true);
   argp.addOption("directory", abbr: "d", help: "Directory to Check", defaultsTo: ".");
   ArgResults opts;
   
@@ -23,6 +24,7 @@ void execute(List<String> args) {
   var config = new Configuration();
   
   config.directory = new Directory(opts['directory']);
+  config.warnings = opts['warn'];
   
   check(config);
 }
@@ -33,11 +35,15 @@ void check(Configuration config) {
     exit(5);
   }
   
-  var context = new Context(config.directory);
+  var context = new Context(config);
   
   init_checks();
   
   checks.forEach((check) {
+    if (!config.warnings && check.type == CheckType.WARN) {
+      return;
+    }
+    
     check.execute(context);
   });
   

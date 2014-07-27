@@ -12,6 +12,8 @@ File file(String path, [Directory directory]) {
 
 Directory get tool_dir => new File.fromUri(Platform.script).parent.parent;
 
+bool fileExists(String path) => new File(path).existsSync();
+
 void inheritIO(Process process) {
   stdout.addStream(process.stdout);
   stderr.addStream(process.stderr);

@@ -3,10 +3,6 @@ part of devtools.util;
 typedef ErrorHandler(Exception err);
 typedef NotFoundHandler();
 
-bool fileExists(String path) {
-  return new File(path).existsSync();
-}
-
 Future<File> findExecutable(String name, {NotFoundHandler notFound: null, ErrorHandler onError: null}) {
   if (onError == null)
     onError = (err) {};
