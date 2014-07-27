@@ -48,9 +48,11 @@ void check(Configuration config) {
   });
   
   if (context.success) {
-    context.info("All Checks Passed");
+    context.info("All checks passed.");
+  } else if (context.warnings) {
+    context.info("Some checks failed with warnings.");
   } else {
-    context.error("Some Checks Failed");
+    context.error("Some checks failed.");
   }
 }
 

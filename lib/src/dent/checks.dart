@@ -3,10 +3,10 @@ part of devtools.dent;
 class Context {
   final Configuration config;
   final AnsiPen pen = new AnsiPen();
-  bool success = true;
   
-  bool get shouldWarn => config.warnings;
-
+  bool success = true;
+  bool warnings = false;
+  
   Directory get directory => config.directory;
 
   Context(this.config) {
@@ -23,6 +23,7 @@ class Context {
     pen.xterm(3);
     print(pen("[WARN] ${message}"));
     success = false;
+    warnings = true;
   }
 
   void fix(String message) {
