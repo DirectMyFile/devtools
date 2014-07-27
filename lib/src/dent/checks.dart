@@ -28,7 +28,7 @@ class Context {
   }
   
   void info(String message) {
-    pen.xterm(1);
+    pen.xterm(15);
     print(pen("[INFO] ${message}"));
   }
 }
