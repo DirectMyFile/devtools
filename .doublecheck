@@ -1,0 +1,7 @@
+analyze:
+  files:
+  - "lib/devtools.dart"
+  - "lib/pubgen.dart"
+  - "lib/cli.dart"
+  - "lib/dent.dart"
+  - "lib/doubletree.dart"
