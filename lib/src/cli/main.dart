@@ -46,7 +46,7 @@ void update() {
 
 void version() {
   var tool_dir = new File.fromUri(Platform.script).parent.parent;
-  var version = loadYaml(new File("${tool_dir.path}/pubspec.yaml").readAsStringSync())['version'];
+  var version = loadYaml(file("pubspec.yaml", tool_dir).readAsStringSync())['version'] as String;
   print("devtools v${version}");
 }
 

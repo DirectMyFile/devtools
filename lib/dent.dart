@@ -7,3 +7,4 @@ import "package:ansicolor/ansicolor.dart";
 
 part 'src/dent/main.dart';
 part 'src/dent/checks.dart';
+part 'src/dent/config.dart';
