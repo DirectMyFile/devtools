@@ -2,30 +2,34 @@ part of devtools.dent;
 
 class Context {
   final Directory directory;
+  final AnsiPen pen = new AnsiPen();
   bool success = true;
 
-  Context(this.directory);
+  Context(this.directory) {
+    pen.xterm(3);
+  }
 
-  void error(String message, {bool shouldExit: false}) {
-    print("[ERROR] ${message}");
+  void error(String message) {
+    pen.xterm(1);
+    print(pen("[ERROR] ${message}"));
     success = false;
-    if (shouldExit) {
-      exit(1);
-    }
   }
 
   void warning(String message) {
-    print("[WARN] ${message}");
+    pen.xterm(3);
+    print(pen("[WARN] ${message}"));
     success = false;
   }
 
   void fix(String message) {
-    print("[FIX] ${message}");
+    pen.xterm(7);
+    print(pen("[FIX] ${message}"));
     success = false;
   }
   
   void info(String message) {
-    print("[INFO] ${message}");
+    pen.xterm(1);
+    print(pen("[INFO] ${message}"));
   }
 }
 
