@@ -4,4 +4,4 @@ analyze:
   - "lib/pubgen.dart"
   - "lib/cli.dart"
   - "lib/dent.dart"
-  - "lib/doubletree.dart"
+  - "lib/doublecheck.dart"
