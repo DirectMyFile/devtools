@@ -21,13 +21,11 @@ void execute(List<String> args) {
 }
 
 void update() {
-  var tool_dir = new File.fromUri(Platform.script).parent.parent;
-
   void execute(String command, void fail(ProcessResult result)) {
     var split = command.split(" ");
     var cmd = split[0];
     var args = new List.from(split)..removeAt(0);
-    var result = Process.runSync(cmd, args, workingDirectory: tool_dir.path);
+    var result = Process.runSync(cmd, args, workingDirectory: toolDir.path);
     if (result.exitCode != 0) {
       fail(result);
     }
@@ -45,8 +43,7 @@ void update() {
 }
 
 void version() {
-  var tool_dir = new File.fromUri(Platform.script).parent.parent;
-  var version = loadYaml(file("pubspec.yaml", tool_dir).readAsStringSync())['version'] as String;
+  var version = loadYaml(file("pubspec.yaml", toolDir).readAsStringSync())['version'] as String;
   print("devtools v${version}");
 }
 

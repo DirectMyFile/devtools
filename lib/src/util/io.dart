@@ -10,7 +10,7 @@ File file(String path, [Directory directory]) {
   return new File(path);
 }
 
-Directory get tool_dir => new File.fromUri(Platform.script).parent.parent;
+Directory get toolDir => new File.fromUri(Platform.script).parent.parent;
 
 bool fileExists(String path) => new File(path).existsSync();
 

@@ -37,7 +37,7 @@ void check(Configuration config) {
   
   var context = new Context(config);
   
-  init_checks();
+  initializeChecks();
   
   checks.forEach((check) {
     if (!config.warnings && check.type == CheckType.WARN) {

@@ -11,10 +11,10 @@ void execute(List<String> args) {
 }
 
 void check() {
-  load_config()
+  loadConfiguration()
     .then(dent)
     .then(analyze)
-    .then(handle_exit);
+    .then(handleExitCode);
 }
 
 void printUsage(ArgParser argp) {

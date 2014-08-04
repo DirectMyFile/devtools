@@ -62,26 +62,26 @@ void pubgen() {
   
   if (yesOrNo("Do you want to add dependencies? ")) {
     var deps = pubspec["dependencies"] = {};
-    var add_more = true;
-    while (add_more) {
+    var addMore = true;
+    while (addMore) {
       var name = prompt("[Dependency Name]: ");
       
       if (name.trim() == "") {
-        add_more = false;
+        addMore = false;
         continue;
       }
       
       var version = prompt("[Dependency Version]: ");
       
       if (version.trim() == "") {
-        add_more = false;
+        addMore = false;
         continue;
       }
       
       deps[name] = version;
       
       if (!yesOrNo("Do you want to add another dependency? ")) {
-        add_more = false;
+        addMore = false;
         continue;
       }
     }

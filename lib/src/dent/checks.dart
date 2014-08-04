@@ -101,7 +101,7 @@ class FileExists implements Check {
 
 List<Check> checks = [];
 
-void init_checks() {
+void initializeChecks() {
   var readmes = ["README.md", "README", "README.txt"];
   var authors = ["AUTHORS", "AUTHORS.md"];
   var changelogs = ["CHANGELOG", "CHANGELOG.md"];
