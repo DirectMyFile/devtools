@@ -14,7 +14,18 @@ Directory get toolDir => new File.fromUri(Platform.script).parent.parent;
 
 bool fileExists(String path) => new File(path).existsSync();
 
-void inheritIO(Process process) {
-  stdout.addStream(process.stdout);
-  stderr.addStream(process.stderr);
+void inheritIO(Process process, {String prefix}) {
+  process.stdout.transform(UTF8.decoder).transform(new LineSplitter()).listen((data) {
+    if (prefix != null) {
+      stdout.write(prefix);
+    }
+    stdout.writeln(data);
+  });
+  
+  process.stderr.transform(new LineSplitter()).listen((data) {
+    if (prefix != null) {
+      stderr.writeln(prefix);
+    }
+    stderr.writeln(data);
+  });
 }

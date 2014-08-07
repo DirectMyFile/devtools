@@ -5,3 +5,5 @@ analyze:
   - "lib/cli.dart"
   - "lib/dent.dart"
   - "lib/doublecheck.dart"
+  - "lib/util.dart"
+  - "bin/dvt.dart"
