@@ -4,7 +4,6 @@ import "dart:io";
 
 import "package:args/args.dart";
 import "package:ansicolor/ansicolor.dart";
-import "package:quiver/io.dart" show visitDirectory;
 import "package:quiver/pattern.dart";
 
 part 'src/dent/main.dart';
