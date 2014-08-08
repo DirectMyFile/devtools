@@ -18,16 +18,12 @@ Future<int> dent(int code) {
   bool explain = false;
   bool prefix = false;
   
-  if (config['dent'] != null) {
-    var dentConfig = config['dent'];
-    
-    if (!(dentConfig.containsKey("enabled") ? dentConfig['enabled'] : true)) {
-      return new Future.value(0);
-    }
-    
-    explain = dentConfig.containsKey("explain") ? dentConfig['explain'] : false;
-    prefix = dentConfig.containsKey("prefix") ? dentConfig['prefix'] : false;
+  if (!getBoolOption("dent", "enabled", defaultValue: true)) {
+    return new Future.value(0);
   }
+  
+  explain = getBoolOption("dent", "explain", defaultValue: false);
+  prefix = getBoolOption("dent", "prefix", defaultValue: false);
   
   printToolInfo("Dent", "Lints your project's structure");
   var args = [file("bin/dvt.dart", toolDir).path, "dent", "--directory=${directory.path}"];
@@ -73,11 +69,10 @@ String createPrefix(String name) {
 Future<int> analyze(int code) {
   if (config['analyze'] == null) {
     return new Future.value(0);
-  } else {
-    var analyzerConfig = config['analyze'];
-    if (!(analyzerConfig.containsKey("enabled") ? analyzerConfig['enabled'] : true)) {
-      return new Future.value(0);
-    }
+  }
+  
+  if (!getBoolOption("analyze", "enabled", defaultValue: true)) {
+    return new Future.value(0);
   }
   
   printToolInfo("Analyzer", "Lints your Dart Code");
@@ -87,6 +82,13 @@ Future<int> analyze(int code) {
     
     return process.exitCode;
   });
+}
+
+bool getBoolOption(String tool, String key, {bool defaultValue: false}) {
+  if (config[tool] == null) return defaultValue;
+  if (config[tool][key] == null) return defaultValue;
+  if (config[tool][key] is! bool) throw new FormatException("${tool}.${key} should be a boolean");
+  return config[tool][key] == true ? true : false;
 }
 
 void handleExitCode(int code) {
