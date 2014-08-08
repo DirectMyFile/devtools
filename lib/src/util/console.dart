@@ -31,6 +31,11 @@ String prompt(String prompt, {bool secret: false}) {
       continue;
     }
     
+    if (byte == 91) {
+      var next = stdin.readByteSync();
+      continue;
+    }
+    
     if (secret) {
       stdout.write("\x1b[D");
       stdout.write("*");
