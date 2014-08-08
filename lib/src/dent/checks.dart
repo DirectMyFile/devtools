@@ -15,27 +15,30 @@ class Context {
 
   void error(String message) {
     pen.xterm(1);
-    print(pen("[ERROR] ${message}"));
+    print(pen("${prefix("ERROR")}${message}"));
     success = false;
   }
 
   void warning(String message) {
     pen.xterm(3);
-    print(pen("[WARN] ${message}"));
+    print(pen("${prefix("WARN")}${message}"));
     success = false;
     warnings = true;
   }
 
   void fix(String message) {
     pen.xterm(7);
-    print(pen("[FIX] ${message}"));
+    print(pen("${prefix("Fix")}${message}"));
     success = false;
   }
 
-  void info(String message) {
+  void info(String message, {bool global}) {
+    if (!config.explain && !global) return;
     pen.xterm(15);
-    print(pen("[INFO] ${message}"));
+    print(pen("${prefix("INFO")}${message}"));
   }
+  
+  String prefix(String name) => config.prefix ? "[${name}] " : "";
 }
 
 class CheckType {
