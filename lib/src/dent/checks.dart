@@ -57,26 +57,31 @@ abstract class Check {
 class FileExists implements Check {
   @override
   final CheckType type;
-  final List<String> filenames;
+  final List<String> patterns;
   
   String error;
   String warn;
   String fix;
   String info;
 
-  FileExists(this.filenames, {this.type: CheckType.WARN, this.error, this.warn, this.fix, this.info});
+  FileExists(this.patterns, {this.type: CheckType.WARN, this.error, this.warn, this.fix, this.info});
 
   @override
   void execute(Context context) {
     bool exists = false;
 
-    for (var filename in filenames) {
-      var file = new File("${context.directory.path}/${filename}");
+    var globs = patterns.map((it) => new Glob(it));
+    var files = context.directory.listSync(recursive: true);
+    
 
-      if (file.existsSync()) {
-        exists = true;
-        break;
+    for (var file in files) {
+      globsLoop: for (Glob glob in globs) {
+        if (glob.hasMatch(file.absolute.path) || glob.hasMatch(file.path) || glob.hasMatch(file.path.split("/").last)) {
+          exists = true;
+          break globsLoop;
+        }
       }
+      if (exists) break;
     }
 
     if (!exists) {
@@ -102,11 +107,11 @@ class FileExists implements Check {
 List<Check> checks = [];
 
 void initializeChecks() {
-  var readmes = ["README.md", "README", "README.txt"];
-  var authors = ["AUTHORS", "AUTHORS.md"];
-  var changelogs = ["CHANGELOG", "CHANGELOG.md"];
-  var contributings = ["CONTRIBUTING", "CONTRIBUTING.md"];
-  var licenses = ["LICENSE", "LICENSE.md"];
+  var readmes = ["README*"];
+  var authors = ["AUTHORS*"];
+  var changelogs = ["CHANGELOG*"];
+  var contributings = ["CONTRIBUTING*"];
+  var licenses = ["LICENSE*"];
   checks.add(new FileExists(readmes, type: CheckType.ERROR, info: "Checking for README", error: "No README Found", fix: "Create a README about your project"));
   checks.add(new FileExists(licenses, type: CheckType.ERROR, info: "Checking for License", error: "No License Found", fix: "Find a license suitable for your project at http://choosealicense.com/"));
   checks.add(new FileExists(authors, info: "Checking for Authors File", warn: "No Authors File Found", fix: "Create an authors file with each author of your project"));
