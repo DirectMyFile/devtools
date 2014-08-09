@@ -74,6 +74,40 @@ class Console {
     write(line);
   }
   
+  static void setTextColor(int id, [bool bright = false]) {
+    if (bright) {
+      sgr(30 + id, [1]);
+    } else {
+      sgr(30 + id);
+    }
+  }
+  
+  static void setBackgroundColor(int id) => sgr(40 + id);
+  
+  static void setBold(bool bold) => sgr(bold ? 1 : 22);
+  static void setItalic(bool italic) => sgr(italic ? 3 : 23);
+  static void setBlink(bool blink) => sgr(blink ? 5 : 25);
+  static void setUnderline(bool underline) => sgr(underline ? 4 : 24);
+  static void setCrossedOut(bool crossedOut) => sgr(crossedOut ? 9 : 29);
+  static void setFramed(bool framed) => sgr(framed ? 51 : 54);
+  
+  static void conceal() => sgr(8);
+  static void reveal() => sgr(28);
+  
+  static void resetAll() => sgr(0);
+  static void resetTextColor() => sgr(39);
+  static void resetBackgroundColor() => sgr(49);
+  
+  static void sgr(int id, [List<int> params]) {
+    String stuff;
+    if (params != null) {
+      stuff = "${id};${params.join(";")}";
+    } else {
+      stuff = id.toString();
+    }
+    writeANSI("${stuff}m");
+  }
+  
   static void nextLine([int times = 1]) => writeANSI("${times}E");
   static void previousLine([int times = 1]) => writeANSI("${times}F");
   static void write(String content) => stdout.write(content);
