@@ -2,8 +2,9 @@ library devtools.dent;
 
 import "dart:io";
 
+import "util.dart";
+
 import "package:args/args.dart";
-import "package:ansicolor/ansicolor.dart";
 import "package:quiver/pattern.dart";
 
 part 'src/dent/main.dart';

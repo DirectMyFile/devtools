@@ -2,40 +2,41 @@ part of devtools.dent;
 
 class Context {
   final Configuration config;
-  final AnsiPen pen = new AnsiPen();
   
   bool success = true;
   bool warnings = false;
   
   Directory get directory => config.directory;
 
-  Context(this.config) {
-    pen.xterm(3);
-  }
+  Context(this.config);
 
   void error(String message) {
-    pen.xterm(1);
-    print(pen("${prefix("ERROR")}${message}"));
+    Console.setTextColor(1, xterm: true);
+    print("${prefix("ERROR")}${message}");
+    Console.resetTextColor();
     success = false;
   }
 
   void warning(String message) {
-    pen.xterm(3);
-    print(pen("${prefix("WARN")}${message}"));
+    Console.setTextColor(3, xterm: true);
+    print("${prefix("WARN")}${message}");
+    Console.resetTextColor();
     success = false;
     warnings = true;
   }
 
   void fix(String message) {
-    pen.xterm(7);
-    print(pen("${prefix("Fix")}${message}"));
+    Console.setTextColor(7, xterm: true);
+    print("${prefix("Fix")}${message}");
+    Console.resetTextColor();
     success = false;
   }
 
   void info(String message, {bool global}) {
     if (!config.explain && !global) return;
-    pen.xterm(15);
-    print(pen("${prefix("INFO")}${message}"));
+    Console.setTextColor(15, xterm: true);
+    print("${prefix("INFO")}${message}");
+    Console.resetTextColor();
   }
   
   String prefix(String name) => config.prefix ? "[${name}] " : "";
