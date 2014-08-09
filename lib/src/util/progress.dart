@@ -1,12 +1,11 @@
 part of devtools.util;
 
 class ProgressBar {
-  final int width;
   final int complete;
   
   int current = 0;
     
-  ProgressBar({int width, this.complete: 100}) : this.width = width != null ? width : stdout.terminalColumns;
+  ProgressBar({this.complete: 100});
   
   void update(int progress) {
     if (progress == current) {
@@ -24,7 +23,7 @@ class ProgressBar {
 
     var digits = percent.toString().length;
     
-    var w = width - digits - 4;
+    var w = stdout.terminalColumns - digits - 4;
     
     var count = (ratio * w).toInt();
     var before = "${percent}% [";
