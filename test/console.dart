@@ -13,10 +13,10 @@ void main() {
   Console.setTextColor(1);
   print("Red");
   Console.resetTextColor();
-  Console.setTextColor(0, true);
-  print("Bright Gray");
+  Console.setTextColor(0, bright: true);
+  print("Gray");
   Console.resetTextColor();
-  Console.setTextColor(1, true);
+  Console.setTextColor(1, bright: true);
   print("Bright Red");
   Console.resetTextColor();
 }

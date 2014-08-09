@@ -56,6 +56,11 @@ String prompt(String prompt, {bool secret: false}) {
   return data;
 }
 
+class Color {
+  static const int BLACK = 0;
+  static const int GRAY = 10;
+}
+
 class Console {
   static const String ANSI_ESCAPE = "\x1b[";
 
@@ -74,11 +79,16 @@ class Console {
     write(line);
   }
   
-  static void setTextColor(int id, [bool bright = false]) {
-    if (bright) {
-      sgr(30 + id, [1]);
+  static void setTextColor(int id, {bool xterm: false, bool bright: false}) {
+    if (xterm) {
+      var c = id.clamp(0, 256);
+      sgr(38, [5, c]);
     } else {
-      sgr(30 + id);
+      if (bright) {
+        sgr(30 + id, [1]);
+      } else {
+        sgr(30 + id);
+      }
     }
   }
   
