@@ -11,3 +11,4 @@ part 'src/util/yaml.dart';
 part 'src/util/console.dart';
 part 'src/util/projects.dart';
 part 'src/util/io.dart';
+part 'src/util/progress.dart';
