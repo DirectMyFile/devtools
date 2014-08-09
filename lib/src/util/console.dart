@@ -56,11 +56,6 @@ String prompt(String prompt, {bool secret: false}) {
   return data;
 }
 
-class Color {
-  static const int BLACK = 0;
-  static const int GRAY = 10;
-}
-
 class Console {
   static const String ANSI_ESCAPE = "\x1b[";
 
