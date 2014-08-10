@@ -3,6 +3,7 @@ import "package:devtools/cli.dart" as CLI;
 import "package:devtools/doublecheck.dart" as DoubleCheck;
 import "package:devtools/pubgen.dart" as PubGen;
 import "package:devtools/screenshot.dart" as Screenshot;
+import "package:devtools/dcget.dart" as DCGet;
 
 void main(List<String> args) {
   if (args.length == 0) {
@@ -27,6 +28,9 @@ void main(List<String> args) {
     case "screenshot":
       Screenshot.execute(args);
       break;
+    case "dcget":
+      DCGet.execute(args);
+      break;
     default:
       print("Unknown tool: $command");
       printUsage();
@@ -41,4 +45,5 @@ void printUsage() {
   print("doublecheck   -- Double checks the directory for any issues");
   print("pubgen        -- Generates a pubspec.yaml");
   print("screenshot    -- Take a Screenshot");
+  print("dcget         -- Fetch DirectCode Projects");
 }
