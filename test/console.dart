@@ -18,7 +18,10 @@ void main() {
   Console.resetTextColor();
   Console.setTextColor(1, bright: true);
   print("Bright Red");
+  Console.setInverted(true);
+  print("Inverted");
+  Console.setInverted(false);
   Console.resetTextColor();
   Console.resetAll();
-  print(Console.getCursorPosition());
+  print("Cursor Position: ${Console.getCursorPosition()}");
 }

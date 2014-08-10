@@ -96,7 +96,7 @@ class Console {
   static void setUnderline(bool underline) => sgr(underline ? 4 : 24);
   static void setCrossedOut(bool crossedOut) => sgr(crossedOut ? 9 : 29);
   static void setFramed(bool framed) => sgr(framed ? 51 : 54);
-  static void setGroundsFlipped(bool flipped) => sgr(flipped ? 7 : 27);
+  static void setInverted(bool flipped) => sgr(flipped ? 7 : 27);
 
   static void conceal() => sgr(8);
   static void reveal() => sgr(28);
