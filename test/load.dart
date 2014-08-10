@@ -1,5 +1,7 @@
 import "dart:async";
 
+import "dart:io";
+
 import "package:devtools/console.dart";
 
 void main() {
@@ -8,5 +10,6 @@ void main() {
   bar.start();
   new Timer(new Duration(seconds: 5), () {
     bar.stop();
+    exit(0);
   });
 }

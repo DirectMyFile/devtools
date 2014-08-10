@@ -136,11 +136,46 @@ class Console {
     }
     return true;
   }
+  
+  
+  static CursorPosition getCursorPosition() {
+    var lm = stdin.lineMode;
+    var em = stdin.echoMode;
+    
+    stdin.lineMode = false;
+    stdin.echoMode = false;
+    
+    writeANSI("6n");
+    var bytes = [];
+    
+    while (true) {
+      var byte = stdin.readByteSync();
+      bytes.add(byte);
+      if (byte == 82) {
+        break;
+      }
+    }
+    
+    stdin.lineMode = lm;
+    stdin.echoMode = em;
+    
+    var str = new String.fromCharCodes(bytes);
+    
+    List<int> parts = new List.from(str.substring(2, str.length - 1).split(";").map((it) => int.parse(it)));
+    
+    return new CursorPosition(parts[0], parts[1]);
+  }
+  
+  static void saveCursor() => writeANSI("s");
+  static void restoreCursor() => writeANSI("u");
 }
 
-class Point {
-  final int x;
-  final int y;
+class CursorPosition {
+  final int row;
+  final int column;
 
-  Point(this.x, this.y);
+  CursorPosition(this.row, this.column);
+  
+  @override
+  String toString() => "(${row}, ${column})";
 }

@@ -14,10 +14,6 @@ class ProgressBar {
     
     current = progress;
     
-    if (current == 0) {
-      stdout.write("");
-    }
-    
     var ratio = progress / complete;
     var percent = (ratio * 100).toInt();
 

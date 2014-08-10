@@ -12,3 +12,4 @@ part 'src/console/prompt.dart';
 part 'src/console/timer.dart';
 part 'src/console/io.dart';
 part 'src/console/format.dart';
+part 'src/console/icons.dart';

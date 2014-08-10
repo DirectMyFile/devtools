@@ -20,4 +20,5 @@ void main() {
   print("Bright Red");
   Console.resetTextColor();
   Console.resetAll();
+  print(Console.getCursorPosition());
 }
