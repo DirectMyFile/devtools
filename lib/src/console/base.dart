@@ -4,6 +4,8 @@ class Console {
   static const String ANSI_ESCAPE = "\x1b[";
   static bool _registeredCTRLC = false;
   static bool initialized = false;
+  static Color _currentTextColor;
+  static Color _currentBackgroundColor;
 
   static String TERM;
   
@@ -32,17 +34,24 @@ class Console {
   }
 
   static void setTextColor(int id, {bool xterm: false, bool bright: false}) {
+    Color color;
     if (xterm) {
       var c = id.clamp(0, 256);
+      color = new Color(c, xterm: true);
       sgr(38, [5, c]);
     } else {
+      color = new Color(id, bright: true);
       if (bright) {
         sgr(30 + id, [1]);
       } else {
         sgr(30 + id);
       }
     }
+    _currentTextColor = color;
   }
+  
+  static Color getTextColor() => _currentTextColor;
+  static Color getBackgroundColor() => _currentBackgroundColor;
 
   static void hideCursor() {
     if (!_registeredCTRLC) {
@@ -50,22 +59,27 @@ class Console {
         showCursor();
         exit(0);
       });
+      _registeredCTRLC = true;
     }
     writeANSI("?25l");
   }
   static void showCursor() => writeANSI("?25h");
-
+  
   static void setBackgroundColor(int id, {bool xterm: false, bool bright: false}) {
+    Color color;
     if (xterm) {
       var c = id.clamp(0, 256);
+      color = new Color(c, xterm: true);
       sgr(48, [5, c]);
     } else {
+      color = new Color(id, bright: true);
       if (bright) {
         sgr(40 + id, [1]);
       } else {
         sgr(40 + id);
       }
     }
+    _currentBackgroundColor = color;
   }
 
   static void centerCursor({bool row: true}) {
@@ -96,14 +110,29 @@ class Console {
   static void setUnderline(bool underline) => sgr(underline ? 4 : 24);
   static void setCrossedOut(bool crossedOut) => sgr(crossedOut ? 9 : 29);
   static void setFramed(bool framed) => sgr(framed ? 51 : 54);
+  static void setEncircled(bool encircled) => sgr(encircled ? 52 : 54);
+  static void setOverlined(bool overlined) => sgr(overlined ? 53 : 55);
+
   static void setInverted(bool flipped) => sgr(flipped ? 7 : 27);
 
   static void conceal() => sgr(8);
   static void reveal() => sgr(28);
 
-  static void resetAll() => sgr(0);
-  static void resetTextColor() => sgr(39);
-  static void resetBackgroundColor() => sgr(49);
+  static void resetAll() {
+    sgr(0);
+    _currentTextColor = null;
+    _currentBackgroundColor = null;
+  }
+  
+  static void resetTextColor() {
+    sgr(39);
+    _currentTextColor = null;
+  }
+  
+  static void resetBackgroundColor() {
+    sgr(49);
+    _currentBackgroundColor = null;
+  }
 
   static void sgr(int id, [List<int> params]) {
     String stuff;

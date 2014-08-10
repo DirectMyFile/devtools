@@ -21,7 +21,23 @@ void main() {
   Console.setInverted(true);
   print("Inverted");
   Console.setInverted(false);
-  Console.resetTextColor();
   Console.resetAll();
+  
+  Console.setFramed(true);
+  print("Framed");
+  Console.setFramed(false);
+  
+  Console.setBlink(true);
+  print("Blink");
+  Console.setBlink(false);
+  
+  Console.setEncircled(true);
+  print("Encircled");
+  Console.setEncircled(false);
+  
+  Console.setOverlined(true);
+  print("Overlined");
+  Console.setOverlined(false);
+  
   print("Cursor Position: ${Console.getCursorPosition()}");
 }
