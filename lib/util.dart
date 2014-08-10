@@ -12,3 +12,5 @@ part 'src/util/console.dart';
 part 'src/util/projects.dart';
 part 'src/util/io.dart';
 part 'src/util/progress.dart';
+part 'src/util/curses.dart';
+part 'src/util/functions.dart';

@@ -19,4 +19,6 @@ void main() {
   Console.setTextColor(1, bright: true);
   print("Bright Red");
   Console.resetTextColor();
+  Console.resetAll();
+  Console.cursorPosition();
 }

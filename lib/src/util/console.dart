@@ -5,12 +5,10 @@ bool yesOrNo(String message) {
   return ["yes", "y", "sure", "ok", "yep", "yeah", "true", "yerp"].contains(answer.toLowerCase());
 }
 
-List<String> _LEFT_KEYS = [68];
-List<String> _RIGHT_KEYS = [67];
-
 String prompt(String prompt, {bool secret: false}) {
   stdout.write(prompt);
   stdin.lineMode = false;
+  stdin.echoMode = false;
   var data = "";
   loop: while (true) {
     var byte = stdin.readByteSync();
@@ -18,6 +16,7 @@ String prompt(String prompt, {bool secret: false}) {
     var char = new String.fromCharCode(byte);
     
     if (char == "\n" || char == "\r" || char == "\u0004") {
+      Console.write("\n");
       break loop;
     }
     
@@ -47,12 +46,14 @@ String prompt(String prompt, {bool secret: false}) {
     }
     
     if (secret) {
-      Console.moveCursorBack();
       Console.write("*");
+    } else {
+      Console.write(char);
     }
     data += char;
   }
   stdin.lineMode = true;
+  stdin.echoMode = true;
   return data;
 }
 
@@ -87,7 +88,40 @@ class Console {
     }
   }
   
-  static void setBackgroundColor(int id) => sgr(40 + id);
+  static void setBackgroundColor(int id, {bool xterm: false, bool bright: false}) {
+    if (xterm) {
+      var c = id.clamp(0, 256);
+      sgr(48, [5, c]);
+    } else {
+      if (bright) {
+        sgr(40 + id, [1]);
+      } else {
+        sgr(40 + id);
+      }
+    }
+  }
+  
+  static void centerCursor({bool row: true}) {
+    if (row) {
+      var column = (stdout.terminalColumns / 2).round();
+      var row = (stdout.terminalLines / 2).round();
+      moveCursor(row: row, column: column);
+    } else {
+      moveToColumn((stdout.terminalColumns / 2).round());
+    }
+  }
+  
+  static void moveCursor({int row, int column}) {
+    var out = "";
+    if (row != null) {
+      out += row.toString();
+    }
+    out += ";";
+    if (column != null) {
+      out += column.toString();
+    }
+    writeANSI("${out}H");
+  }
   
   static void setBold(bool bold) => sgr(bold ? 1 : 22);
   static void setItalic(bool italic) => sgr(italic ? 3 : 23);
@@ -113,8 +147,26 @@ class Console {
     writeANSI("${stuff}m");
   }
   
+  static int get rows => stdout.terminalLines;
+  static int get columns => stdout.terminalColumns;
+  
   static void nextLine([int times = 1]) => writeANSI("${times}E");
   static void previousLine([int times = 1]) => writeANSI("${times}F");
   static void write(String content) => stdout.write(content);
   static void writeANSI(String after) => stdout.write("${ANSI_ESCAPE}${after}");
+  
+  static bool _bytesEqual(List<int> a, List<int> b) {
+    if (a.length != b.length) return false;
+    for (var i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) return false;
+    }
+    return true;
+  }
+}
+
+class Point {
+  final int x;
+  final int y;
+  
+  Point(this.x, this.y);
 }
