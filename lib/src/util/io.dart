@@ -19,7 +19,8 @@ void inheritIO(Process process, {String prefix}) {
     if (prefix != null) {
       stdout.write(prefix);
     }
-    stdout.writeln(data);
+    stdout.write(data);
+    stdout.write("\n");
   });
   
   process.stderr.transform(new LineSplitter()).listen((data) {

@@ -1,7 +1,5 @@
 part of devtools.doublecheck;
 
-AnsiPen pen = new AnsiPen();
-
 Map<String, dynamic> config = {};
 
 Future loadConfiguration() {
@@ -42,6 +40,10 @@ Future<int> dent(int code) {
   });
 }
 
+String createPrefix(String tool) {
+  return format("[{color:magenta}${tool}{color:normal}] ");
+}
+
 void printToolInfo(String name, String description) {
   Console.write("[");
   Console.setTextColor(3, xterm: true);
@@ -53,16 +55,6 @@ void printToolInfo(String name, String description) {
   Console.resetAll();
   Console.write("]");
   Console.write("\n");
-}
-
-
-String createPrefix(String name) {
-  var out = "[";
-  pen.magenta();
-  out += pen(name);
-  out += "] ";
-  pen.reset();
-  return out;
 }
 
 Future<int> analyze(int code) {
