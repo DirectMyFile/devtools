@@ -1,4 +1,4 @@
-part of devtools.dent;
+part of devtools.tool.dent;
 
 void execute(List<String> args) {
   var argp = new ArgParser();

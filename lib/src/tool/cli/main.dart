@@ -1,4 +1,4 @@
-part of devtools.cli;
+part of devtools.tool.cli;
 
 void execute(List<String> args) {
   var argp = new ArgParser();

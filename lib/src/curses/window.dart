@@ -1,4 +1,4 @@
-part of devtools.util;
+part of devtools.curses;
 
 abstract class Window {
   String _title;
@@ -19,10 +19,8 @@ abstract class Window {
   
   void _init() {
     stdin.echoMode = false;
-    stdin.listen((data) {
+    stdin.listen((List<int> data) {
       _keyPresscontroller.add(data);
-//      Console.moveCursor(row: Console.rows);
-//      update();
     });
   }
   

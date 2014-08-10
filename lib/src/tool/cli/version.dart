@@ -1,4 +1,4 @@
-part of devtools.cli;
+part of devtools.tool.cli;
 
 class VersionWindow extends Window {
   String version;

@@ -1,3 +1,5 @@
+import "package:devtools/curses.dart";
+import "package:devtools/console.dart";
 import "package:devtools/util.dart";
 import "package:yaml/yaml.dart";
 

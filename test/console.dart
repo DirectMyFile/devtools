@@ -1,4 +1,4 @@
-import "package:devtools/util.dart";
+import "package:devtools/console.dart";
 
 void main() {
   Console.setBold(true);

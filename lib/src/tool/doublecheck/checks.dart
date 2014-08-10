@@ -1,4 +1,4 @@
-part of devtools.doublecheck;
+part of devtools.tool.doublecheck;
 
 Map<String, dynamic> config = {};
 

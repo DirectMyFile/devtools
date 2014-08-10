@@ -1,4 +1,4 @@
-part of devtools.util;
+part of devtools.console;
 
 class ProgressBar {
   final int complete;

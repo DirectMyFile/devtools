@@ -1,4 +1,4 @@
-part of devtools.dent;
+part of devtools.tool.dent;
 
 class Configuration {
   Directory directory;

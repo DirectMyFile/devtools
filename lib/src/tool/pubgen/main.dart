@@ -1,4 +1,4 @@
-part of devtools.pubgen;
+part of devtools.tool.pubgen;
 
 void execute(List<String> args) {
   var argp = new ArgParser();

@@ -1,4 +1,4 @@
-part of devtools.util;
+part of devtools.console;
 
 /* A Mimic of Pub's Timer */
 class TimeDisplay {
