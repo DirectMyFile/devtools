@@ -8,3 +8,4 @@ import "package:yaml/yaml.dart";
 import "util.dart";
 
 part 'src/cli/main.dart';
+part 'src/cli/version.dart';

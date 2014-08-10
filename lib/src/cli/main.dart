@@ -6,13 +6,14 @@ void execute(List<String> args) {
   argp.addFlag("update", abbr: "u", help: "Updates devtools", negatable: false);
   argp.addFlag("help", abbr: "h", help: "Prints this Help Message", negatable: false);
   argp.addFlag("version", abbr: "v", help: "Prints the Version", negatable: false);
+  argp.addFlag("window", abbr: "w", help: "Display Version in a Window", negatable: false, hide: true);
 
   var opts = argp.parse(args);
 
   if (opts['update']) {
     update();
   } else if (opts['version']) {
-    version();
+    version(opts['window']);
   } else if (opts['help']) {
     printUsage(argp);
   } else {
@@ -32,19 +33,30 @@ void update() {
   }
 
   execute("git pull origin master", (result) {
+    Console.setBold(true);
     print("Failed to Pull Changes!");
+    Console.setBold(false);
     exit(1);
   });
 
   execute("pub upgrade", (result) {
+    Console.setBold(true);
     print("Failed to Update Dependencies!");
+    Console.setBold(false);
     exit(1);
   });
 }
 
-void version() {
+void version(bool window) {
   var version = loadYaml(file("pubspec.yaml", toolDir).readAsStringSync())['version'] as String;
-  print("devtools v${version}");
+  if (!window) {
+    Console.setBold(true);
+    print("devtools v${version}");
+    Console.setBold(false);
+  } else {
+    var it = new VersionWindow();
+    it.display();
+  }
 }
 
 void printUsage(ArgParser argp) {

@@ -1,7 +1,6 @@
 part of devtools.util;
 
 abstract class Window {
-  static bool _hasSetupWatchCtrlC = false;
   String _title;
   Stream<List<int>> get onKeyPress => _keyPresscontroller.stream.asBroadcastStream();
   final StreamController<List<int>> _keyPresscontroller = new StreamController();
@@ -19,19 +18,11 @@ abstract class Window {
   void initialize();
   
   void _init() {
-    
-    if (!_hasSetupWatchCtrlC) {
-      ProcessSignal.SIGINT.watch().listen((signal) {
-        Console.showCursor();
-        exit(0);
-      });
-    }
-    
     stdin.echoMode = false;
     stdin.listen((data) {
       _keyPresscontroller.add(data);
-      Console.moveCursor(row: Console.rows);
-      update();
+//      Console.moveCursor(row: Console.rows);
+//      update();
     });
   }
   

@@ -159,6 +159,7 @@ String prompt(String prompt, {bool secret: false}) {
 
 class Console {
   static const String ANSI_ESCAPE = "\x1b[";
+  static bool _registeredCTRLC = false;
 
   static void moveCursorForward([int times = 1]) => writeANSI("${times}C");
   static void moveCursorBack([int times = 1]) => writeANSI("${times}D");
@@ -188,7 +189,15 @@ class Console {
     }
   }
 
-  static void hideCursor() => writeANSI("?25l");
+  static void hideCursor() {
+    if (!_registeredCTRLC) {
+      ProcessSignal.SIGINT.watch().listen((signal) {
+        showCursor();
+        exit(0);
+      });
+    }
+    writeANSI("?25l");
+  }
   static void showCursor() => writeANSI("?25h");
 
   static void setBackgroundColor(int id, {bool xterm: false, bool bright: false}) {
