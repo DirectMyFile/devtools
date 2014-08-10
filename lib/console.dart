@@ -6,7 +6,7 @@ import "dart:io";
 
 import "package:quiver/strings.dart" as StringUtils;
 
-import "util.dart";
+import "package:devtools/util.dart";
 
 part 'src/console/base.dart';
 part 'src/console/progress.dart';

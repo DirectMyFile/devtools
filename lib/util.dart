@@ -2,7 +2,6 @@ library devtools.util;
 
 import "dart:async";
 import "dart:io";
-import "dart:convert";
 
 part 'src/util/executables.dart';
 part 'src/util/yaml.dart';

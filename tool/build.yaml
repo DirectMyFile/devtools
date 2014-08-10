@@ -1,0 +1,13 @@
+analyzer.files:
+  - lib/console.dart
+  - lib/cli.dart
+  - lib/curses.dart
+  - lib/dent.dart
+  - lib/devtools.dart
+  - lib/doublecheck.dart
+  - lib/pubgen.dart
+  - lib/screenshot.dart
+  - lib/util.dart
+check.tasks: 
+  - analyze
+docs.output: out/docs

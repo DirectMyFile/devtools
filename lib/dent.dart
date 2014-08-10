@@ -2,7 +2,7 @@ library devtools.tool.dent;
 
 import "dart:io";
 
-import "console.dart";
+import "package:devtools/console.dart";
 
 import "package:args/args.dart";
 import "package:quiver/pattern.dart";

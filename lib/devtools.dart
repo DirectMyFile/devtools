@@ -1,4 +1,4 @@
 library devtools;
 
 /* Don't add tool libraries here */
-export "util.dart";
+export "package:devtools/util.dart";
