@@ -12,15 +12,15 @@ class TimeDisplay {
   void start() {
     stdin.echoMode = false;
     _watch = new Stopwatch();
-    _watch.start();
     _updateTimer = new Timer.periodic(new Duration(milliseconds: 50), (timer) {
       update();
     });
+    _watch.start();
   }
   
   void stop() {
-    stdin.echoMode = true;
     _watch.stop();
+    stdin.echoMode = true;
     _updateTimer.cancel();
   }
   
@@ -32,7 +32,7 @@ class TimeDisplay {
       _isStart = false;
     } else {
       Console.moveCursorBack(_lastMsg.length);
-      var msg = "(${_watch.elapsed.inMilliseconds / 1000}s)";
+      var msg = "(${(_watch.elapsed.inMilliseconds / 1000).toStringAsFixed(2)}s)";
       _lastMsg = msg;
       Console.setBold(true);
       Console.write(msg);
