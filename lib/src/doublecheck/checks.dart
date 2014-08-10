@@ -35,26 +35,20 @@ Future<int> dent(int code) {
   }
   
   return Process.start("dart", args).then((process) {
-    inheritIO(process, prefix: createPrefix("Dent"));
+    inheritIO(process, prefix: createPrefix("Dent"), skipBlank: true);
     return process.exitCode;
   });
 }
 
 String createPrefix(String tool) {
-  return format("[{color:magenta}${tool}{color:normal}] ");
+  return format("[{{color:magenta}}{{tool}}{{color:normal}}] ", replace: { "tool": tool });
 }
 
 void printToolInfo(String name, String description) {
-  Console.write("[");
-  Console.setTextColor(3, xterm: true);
-  Console.write("Executing ${name}");
-  Console.resetAll();
-  Console.write(" - ");
-  Console.setTextColor(3, xterm: true);
-  Console.write(description);
-  Console.resetAll();
-  Console.write("]");
-  Console.write("\n");
+  print(format("[{{color:gold}}{{name}}{{color:normal}} - {{color:gold}}{{description}}{{color:normal}}]", replace: {
+    "name": name,
+    "description": description
+  }));
 }
 
 Future<int> analyze(int code) {

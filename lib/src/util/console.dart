@@ -5,7 +5,7 @@ bool yesOrNo(String message) {
   return ["yes", "y", "sure", "ok", "yep", "yeah", "true", "yerp"].contains(answer.toLowerCase());
 }
 
-RegExp _FMT_REGEX = new RegExp(r"\{(.+?)\}");
+RegExp _FMT_REGEX = new RegExp(r"\{\{(.+?)\}\}");
 
 Map<String, Color> _COLORS = {
   "black": new Color(0),
@@ -47,7 +47,7 @@ class Color {
   }
 }
 
-String format(String input, [List<String> args, Map<String, String> replace]) {
+String format(String input, {List<String> args, Map<String, String> replace}) {
   var out = input;
 
   var matches = _FMT_REGEX.allMatches(input);
@@ -72,13 +72,13 @@ String format(String input, [List<String> args, Map<String, String> replace]) {
         if (index < 0 || index > args.length - 1) {
           throw new RangeError.range(index, 0, input.length - 1);
         }
-        out = out.replaceAll("{${index}}", args[index]);
+        out = out.replaceAll("{{${index}}}", args[index]);
         continue;
       } on FormatException catch (e) {}
     }
 
     if (replace != null && replace.containsKey(id)) {
-      out = out.replaceAll("{${id}}", replace[id]);
+      out = out.replaceAll("{{${id}}}", replace[id]);
       continue;
     }
     
@@ -89,12 +89,12 @@ String format(String input, [List<String> args, Map<String, String> replace]) {
       }
       
       if (_COLORS.containsKey(color)) {
-        out = out.replaceAll("{${id}}", _COLORS[color].toString());
+        out = out.replaceAll("{{${id}}}", _COLORS[color].toString());
         continue;
       }
       
       if (color == "normal") {
-        out = out.replaceAll("{color:normal}", "${Console.ANSI_ESCAPE}0m");
+        out = out.replaceAll("{{color:normal}}", "${Console.ANSI_ESCAPE}0m");
         continue;
       }
     }
