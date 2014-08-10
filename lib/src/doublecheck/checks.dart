@@ -43,17 +43,16 @@ Future<int> dent(int code) {
 }
 
 void printToolInfo(String name, String description) {
-  var out = new StringBuffer();
-  out.write("[");
-  pen.xterm(3);
-  out.write(pen("Executing ${name}"));
-  pen.reset();
-  out.write(" - ");
-  pen.xterm(3);
-  out.write(pen(description));
-  pen.reset();
-  out.write("]");
-  print(out);
+  Console.write("[");
+  Console.setTextColor(3, xterm: true);
+  Console.write("Executing ${name}");
+  Console.resetAll();
+  Console.write(" - ");
+  Console.setTextColor(3, xterm: true);
+  Console.write(description);
+  Console.resetAll();
+  Console.write("]");
+  Console.write("\n");
 }
 
 
