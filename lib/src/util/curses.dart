@@ -1,17 +1,41 @@
 part of devtools.util;
 
-class Window {
+abstract class Window {
+  static bool _hasSetupWatchCtrlC = false;
   String _title;
-
+  Stream<List<int>> get onKeyPress => _keyPresscontroller.stream.asBroadcastStream();
+  final StreamController<List<int>> _keyPresscontroller = new StreamController();
+  Timer _updateTimer;
+  
   String get title => _title;
   set title(String value) => _title = value;
   
   Window(String title) {
     _title = title;
+    _init();
+    initialize();
   }
   
-  void display() {
-    /* Clear Entire Display */
+  void initialize();
+  
+  void _init() {
+    
+    if (!_hasSetupWatchCtrlC) {
+      ProcessSignal.SIGINT.watch().listen((signal) {
+        Console.showCursor();
+        exit(0);
+      });
+    }
+    
+    stdin.echoMode = false;
+    stdin.listen((data) {
+      _keyPresscontroller.add(data);
+      Console.moveCursor(row: Console.rows);
+      update();
+    });
+  }
+  
+  void update() {
     Console.eraseDisplay(2);
     var width = stdout.terminalColumns;
     Console.moveCursorUp(stdout.terminalLines);
@@ -23,6 +47,26 @@ class Window {
     repeat((i) => Console.write("\n"), stdout.terminalLines - 1);
     Console.moveCursor(row: 2, column: 1);
     Console.centerCursor(row: true);
+  }
+  
+  void display() {
+    update();
+  }
+  
+  Timer startUpdateLoop([Duration wait]) {
+    if (wait == null) wait = new Duration(seconds: 2);
+    _updateTimer = new Timer.periodic(wait, (timer) {
+      update();
+    });
+    return _updateTimer;
+  }
+  
+  void close() {
+    if (_updateTimer != null) {
+      _updateTimer.cancel();
+    }
+    Console.eraseDisplay(2);
+    stdin.echoMode = true;
   }
   
   void writeCentered(String text) {

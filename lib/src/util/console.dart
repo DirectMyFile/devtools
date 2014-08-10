@@ -88,6 +88,9 @@ class Console {
     }
   }
   
+  static void hideCursor() => writeANSI("?25l");
+  static void showCursor() => writeANSI("?25h");
+  
   static void setBackgroundColor(int id, {bool xterm: false, bool bright: false}) {
     if (xterm) {
       var c = id.clamp(0, 256);
