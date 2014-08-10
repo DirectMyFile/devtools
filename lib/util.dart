@@ -1,7 +1,7 @@
 library devtools.util;
 
-import "dart:io";
 import "dart:async";
+import "dart:io";
 import "dart:convert";
 
 import "package:quiver/strings.dart" as strs;
@@ -14,3 +14,4 @@ part 'src/util/io.dart';
 part 'src/util/progress.dart';
 part 'src/util/curses.dart';
 part 'src/util/functions.dart';
+part 'src/util/timer.dart';
