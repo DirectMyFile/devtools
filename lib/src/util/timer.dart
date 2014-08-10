@@ -10,6 +10,7 @@ class TimeDisplay {
   TimeDisplay();
   
   void start() {
+    stdin.echoMode = false;
     _watch = new Stopwatch();
     _watch.start();
     _updateTimer = new Timer.periodic(new Duration(milliseconds: 50), (timer) {
@@ -18,6 +19,7 @@ class TimeDisplay {
   }
   
   void stop() {
+    stdin.echoMode = true;
     _watch.stop();
     _updateTimer.cancel();
   }
