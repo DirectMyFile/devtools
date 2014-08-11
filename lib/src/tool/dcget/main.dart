@@ -10,6 +10,7 @@ void execute(List<String> args) {
   argp.addOption("directory", abbr: "d", help: "Directory to Clone To");
   argp.addFlag("no-hooks", abbr: "n", help: "Disable Project Hooks", defaultsTo: false, negatable: false);
   argp.addFlag("verbose", abbr: "v", help: "Verbose Output", defaultsTo: false, negatable: false);
+  argp.addFlag("help", abbr: "h", help: "Prints this Help Message", defaultsTo: false, negatable: false);
 
   ArgResults opts;
 
@@ -22,9 +23,14 @@ void execute(List<String> args) {
 
   verbose = opts['verbose'];
 
-  if (opts['list']) {
+  if (opts['help']) {
+    printUsage(argp);
+    exit(0);
+  } else if (opts['list']) {
     fetchProjects().then((projects) {
+      projects.sort((a, b) => a.name.compareTo(b.name));
       for (var project in projects) {
+        if (project.size == 0) continue;
         Console.setBold(true);
         Console.write("${project.name}");
         Console.setBold(false);
@@ -32,8 +38,12 @@ void execute(List<String> args) {
           Console.write(" - ");
           Console.write(project.description);
         }
+        Console.write(" - ");
+        Console.write("${project.stargazersCount} stars");
         Console.write("\n");
       }
+      Console.resetAll();
+      exit(0);
     });
   } else {
     var rest = opts.rest;
