@@ -70,6 +70,7 @@ void initializeClient() {
 
 Future clone(String url, String directory) {
   var bar = new LoadingBar();
+  
   Console.setBold(true);
   Console.write("Fetching Project");
   Console.setBold(false);
@@ -81,9 +82,11 @@ Future clone(String url, String directory) {
   }).then((code) {
     if (code != 0) {
       bar.stop(format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}"));
-      exit(code);
+      exit(1);
     }
+    Console.setBold(true);
     bar.stop(format("{{color:green}}${Icon.CHECKMARK}{{color:normal}}"));
+    Console.setBold(false);
     return new Future.value(null);
   });
 }

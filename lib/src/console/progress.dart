@@ -41,13 +41,18 @@ class ProgressBar {
   }
 }
 
+typedef NextPositionLoadingBar();
+
 class LoadingBar {
   Timer _timer;
   bool started = true;
   String position = "<";
   String lastPosition;
+  NextPositionLoadingBar nextPosition;
   
-  LoadingBar();
+  LoadingBar() {
+    nextPosition = _nextPosition;
+  }
   
   void start() {
     Console.hideCursor();
@@ -77,7 +82,7 @@ class LoadingBar {
     }
   }
   
-  void nextPosition() {
+  void _nextPosition() {
     lastPosition = position;
     switch (position) {
       case "|":
