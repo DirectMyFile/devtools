@@ -10,6 +10,7 @@ final _START_VERSION = new RegExp(
 
 final _COMPLETE_VERSION = new RegExp("${_START_VERSION.pattern}\$");
 final _START_COMPARISON = new RegExp(r"^[<>]=?");
+
 class Version implements Comparable<Version>, VersionConstraint {
   static Version get none => new Version(0, 0, 0);
 

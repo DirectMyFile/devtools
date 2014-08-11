@@ -5,6 +5,12 @@ abstract class VersionConstraint {
 
   static VersionConstraint empty = const _EmptyVersion();
 
+  static Future<VersionConstraint> create(String input) {
+    return new Future(() {
+      return new VersionConstraint.parse(input);
+    });
+  }
+  
   factory VersionConstraint.parse(String text) {
     if (text.trim() == "any") return new VersionRange();
 
