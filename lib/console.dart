@@ -16,3 +16,4 @@ part 'src/console/io.dart';
 part 'src/console/format.dart';
 part 'src/console/icons.dart';
 part 'src/console/clipboard.dart';
+part 'src/console/tree.dart';
