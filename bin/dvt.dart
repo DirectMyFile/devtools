@@ -34,6 +34,7 @@ void main(List<String> args) {
     default:
       print("Unknown tool: $command");
       printUsage();
+      break;
   }
 }
 
