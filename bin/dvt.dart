@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:devtools/dent.dart" as Dent;
 import "package:devtools/cli.dart" as CLI;
 import "package:devtools/doublecheck.dart" as DoubleCheck;
@@ -5,11 +7,18 @@ import "package:devtools/pubgen.dart" as PubGen;
 import "package:devtools/screenshot.dart" as Screenshot;
 import "package:devtools/dcget.dart" as DCGet;
 
+import "package:semver/semver.dart";
+
+const String DART_MINIMAL_VERSION = "1.6.0-dev";
+
 void main(List<String> args) {
+  checkEnvironment();
+  
   if (args.length == 0) {
     printUsage();
     return;
   }
+  
   var command = args[0];
   args = new List.from(args.getRange(1, args.length), growable: false);
   switch (command) {
@@ -35,6 +44,25 @@ void main(List<String> args) {
       print("Unknown tool: $command");
       printUsage();
       break;
+  }
+}
+
+void checkEnvironment() {
+  if (Platform.isWindows) {
+    print("Sorry, devtools is not supported on Windows due to platform limitations.");
+    exit(1);
+  }
+  
+  if (Platform.isAndroid) {
+    print("Sorry, devtools is not yet supported on Android due to platform limitations.");
+    exit(1);
+  }
+  
+  var dartVersion = new SemanticVersion.fromString(Platform.version.split("(")[0].trim());
+  var required = new SemanticVersion.fromString(DART_MINIMAL_VERSION);
+  if (dartVersion < required) {
+    print("Sorry, devtools requires Dart >=${DART_MINIMAL_VERSION}");
+    exit(1);
   }
 }
 
