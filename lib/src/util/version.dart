@@ -14,18 +14,18 @@ class Version {
   final int patch;
   final String pre;
   final String build;
-  
+
   const Version(this.major, this.minor, this.patch, this.pre, this.build);
-  
+
   factory Version.fromMap(Map<String, dynamic> tag) {
     return new Version(tag['major'], tag['minor'], tag['patch'], tag['pre'], tag['build']);
   }
-  
+
   factory Version.parse(String tag) {
     _VersionTokenizer t = new _VersionTokenizer(tag);
     return new Version.fromMap(t.tokenize());
   }
-  
+
   Version increment(int part) {
     var map = toMap();
     switch (part) {
@@ -48,10 +48,10 @@ class Version {
         throw new Exception("Invalid Part");
         break;
     }
-    
+
     return new Version.fromMap(map);
   }
-  
+
   Map<String, dynamic> toMap() {
     return {
       "major": major,
@@ -61,7 +61,7 @@ class Version {
       "build": build
     };
   }
-  
+
   bool operator ==(Object other) {
     return other is Version
         && other.major == major
@@ -69,19 +69,19 @@ class Version {
         && other.pre == pre
         && other.build == build;
   }
-  
+
   bool operator >(Version other) {
     return !(this == other || this < other);
   }
-  
+
   bool operator >=(Version other) {
     return (this > other || this == other);
   }
-  
+
   bool operator <=(Version other) {
     return (this < other || this == other);
   }
-  
+
   bool operator <(Version other) {
     if (this.major < other.major) {
       return true;
@@ -97,8 +97,8 @@ class Version {
           return false;
         }
       }
-    } 
-    
+    }
+
     if (pre == null && other.pre == null) {
       return false;
     } else if (pre == null && other.pre != null) {
@@ -111,11 +111,10 @@ class Version {
       return false;
     }
 
-    var isSmaller = _comparePreReleasePart(_splitPreReleaseParts(this.pre),
-        _splitPreReleaseParts(other.pre));
+    var isSmaller = _comparePreReleasePart(_splitPreReleaseParts(this.pre), _splitPreReleaseParts(other.pre));
     return isSmaller == -1 ? true : false;
   }
-  
+
   @override
   String toString() {
     var version = "${major}.${minor}.${patch}";
@@ -133,7 +132,7 @@ class Version {
 }
 
 int _comparePreReleasePart(List a, List b) {
-  for(var i = 0; i < a.length; i++) {
+  for (var i = 0; i < a.length; i++) {
     if (i >= b.length) {
       return 1;
     }
@@ -141,9 +140,9 @@ int _comparePreReleasePart(List a, List b) {
     var elemA = a[i];
     var elemB = b[i];
 
-    if (elemA is String && elemB is !String) {
+    if (elemA is String && elemB is! String) {
       return 1;
-    } else if (elemA is !String && elemB is String) {
+    } else if (elemA is! String && elemB is String) {
       return -1;
     } else if (elemA is int && elemB is int) {
       if (elemA < elemB) {
@@ -195,9 +194,9 @@ class _VersionTokenizer {
       while ('01234567890'.contains(this.consume())) {
         unparsedInt.write(this.current);
       }
+    } catch (Exception) {/* ignore */} finally {
+      return int.parse(unparsedInt.toString());
     }
-    catch (Exception) {/* ignore */}
-    finally { return int.parse(unparsedInt.toString()); }
   }
 
   void setMandatoryPart(int value) {
@@ -229,31 +228,31 @@ class _VersionTokenizer {
     this.setMandatoryPart(this.tokenizeInt());
   }
 
- void tokenizePreRelease() {
-   StringBuffer everything = new StringBuffer();
-   everything.write(this._source[this._index]);
+  void tokenizePreRelease() {
+    StringBuffer everything = new StringBuffer();
+    everything.write(this._source[this._index]);
 
-   try {
-     while (this.consume() != '+') {
-       everything.write(this.current);
-     }
-   }
-   catch (Exception) {/* ignore */}
-   finally { this._version['pre'] = everything.toString(); }
- }
+    try {
+      while (this.consume() != '+') {
+        everything.write(this.current);
+      }
+    } catch (Exception) {/* ignore */} finally {
+      this._version['pre'] = everything.toString();
+    }
+  }
 
- void tokenizeBuild() {
-   StringBuffer everything = new StringBuffer();
-   everything.write(this._source[this._index]);
+  void tokenizeBuild() {
+    StringBuffer everything = new StringBuffer();
+    everything.write(this._source[this._index]);
 
-   try {
-     while (this.consume() != '') {
-       everything.write(this.current);
-     }
-   }
-   catch (Exception) {/* ignore */}
-   finally { this._version['build'] = everything.toString(); }
- }
+    try {
+      while (this.consume() != '') {
+        everything.write(this.current);
+      }
+    } catch (Exception) {/* ignore */} finally {
+      this._version['build'] = everything.toString();
+    }
+  }
 
   Map tokenize() {
     this.consume();
@@ -276,10 +275,10 @@ class _VersionTokenizer {
 
     if (this._index < (this._source.length - 1)) {
       if (this.current == '+') {
-          this.consume();
-          this.tokenizeBuild();
+        this.consume();
+        this.tokenizeBuild();
       } else {
-          throw new Exception('bad tag');
+        throw new Exception('bad tag');
       }
     }
 
@@ -294,7 +293,7 @@ List _splitPreReleaseParts(String thing) {
     } catch (FormatException) {
       return element;
     }
-  }).toList(growable:false);
+  }).toList(growable: false);
 }
 
 int _compareStrings(String a, String b) {
