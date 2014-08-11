@@ -7,7 +7,7 @@ import "package:devtools/pubgen.dart" as PubGen;
 import "package:devtools/screenshot.dart" as Screenshot;
 import "package:devtools/dcget.dart" as DCGet;
 
-import "package:semver/semver.dart";
+import "package:devtools/util.dart";
 
 const String DART_MINIMAL_VERSION = "1.6.0-dev";
 
@@ -58,8 +58,8 @@ void checkEnvironment() {
     exit(1);
   }
   
-  var dartVersion = new SemanticVersion.fromString(Platform.version.split("(")[0].trim());
-  var required = new SemanticVersion.fromString(DART_MINIMAL_VERSION);
+  var dartVersion = new Version.parse(Platform.version.split("(")[0].trim());
+  var required = new Version.parse(DART_MINIMAL_VERSION);
   if (dartVersion < required) {
     print("Sorry, devtools requires Dart >=${DART_MINIMAL_VERSION}");
     exit(1);
