@@ -1,10 +1,27 @@
 part of devtools.tool.screenshot;
 
 void execute(List<String> args) {
+  var scrot = findExecutable("scrot");
+  var xclip = findExecutable("xclip");
+  
+  if (scrot == null) {
+    print("ERROR: please install 'scrot'");
+    exit(1);
+  }
+  
+  if (xclip == null) {
+    print("ERROR: please install 'xclip'");
+    exit(1);
+  }
+  
   for (int i = 5; i >= 1; i--) {
-    print(i);
+    Console.hideCursor();
+    Console.overwriteLine(i.toString());
     sleep(new Duration(seconds: 1));
   }
+  
+  Console.showCursor();
+  Console.write("\n");
   
   var file = new File("/tmp/screenshot.png");
   
