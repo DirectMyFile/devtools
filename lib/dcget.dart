@@ -6,7 +6,7 @@ import "dart:io";
 import "package:args/args.dart";
 import "package:github/client.dart";
 import "package:devtools/console.dart";
-import "package:devtools/util.dart";
+import "package:yaml/yaml.dart";
 
 part 'src/tool/dcget/main.dart';
 
