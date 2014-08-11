@@ -120,6 +120,8 @@ class Console {
 
   static void resetAll() {
     sgr(0);
+    stdin.echoMode = true;
+    stdin.lineMode = true;
     _currentTextColor = null;
     _currentBackgroundColor = null;
   }

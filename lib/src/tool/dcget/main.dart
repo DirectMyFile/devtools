@@ -53,6 +53,7 @@ void execute(List<String> args) {
 void getProject(String project, Directory dir, bool shouldRunHooks) {
   if (dir.existsSync()) {
     print("ERROR: Directory '${dir.path}' already exists.");
+    Console.resetAll();
     exit(1);
   }
 
@@ -60,6 +61,7 @@ void getProject(String project, Directory dir, bool shouldRunHooks) {
     var exists = repos.any((repo) => repo.name.toLowerCase() == project.toLowerCase());
     if (!exists) {
       print("ERROR: Unknown Project '${project}'");
+      Console.resetAll();
       exit(1);
     }
     var repo = repos.firstWhere((repo) => repo.name.toLowerCase() == project.toLowerCase());
@@ -68,6 +70,7 @@ void getProject(String project, Directory dir, bool shouldRunHooks) {
     if (shouldRunHooks) {
       runHooks(dir);
     } else {
+      Console.resetAll();
       exit(0); 
     }
   });
@@ -115,6 +118,7 @@ void runHooks(Directory directory) {
             bar.stop(out);
           }
           print("ERROR: Failed to fetch dependencies.");
+          Console.resetAll();
           exit(1);
         }
       });
@@ -136,6 +140,7 @@ void runHooks(Directory directory) {
             bar.stop(out);
           }
           print("ERROR: Hook Script exited with code: ${code}");
+          Console.resetAll();
           exit(1);
         }
       });
@@ -145,6 +150,7 @@ void runHooks(Directory directory) {
     if (!verbose) {
       bar.stop(out);
     }
+    Console.resetAll();
     exit(0);
   });
 }
@@ -181,6 +187,7 @@ Future clone(String url, String directory) {
       if (!verbose) {
         bar.stop(out);
       }
+      Console.resetAll();
       exit(1);
     }
     if (!verbose) {
