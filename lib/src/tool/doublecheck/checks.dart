@@ -35,7 +35,7 @@ Future<int> dent(int code) {
   }
   
   return Process.start("dart", args).then((process) {
-    inheritIO(process, prefix: createPrefix("Dent"), skipBlank: true);
+    inheritIO(process, prefix: createPrefix("Dent"));
     return process.exitCode;
   });
 }

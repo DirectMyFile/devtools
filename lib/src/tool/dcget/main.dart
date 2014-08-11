@@ -4,6 +4,7 @@ bool verbose = false;
 GitHub github;
 
 void execute(List<String> args) {
+  stdin.echoMode = false;
   var argp = new ArgParser();
   argp.addFlag("list", abbr: "l", help: "List Projects", negatable: false);
   argp.addOption("directory", abbr: "d", help: "Directory to Clone To");
@@ -29,10 +30,9 @@ void execute(List<String> args) {
         Console.setBold(false);
         if (project.description != null && project.description.isNotEmpty) {
           Console.write(" - ");
-          Console.setBold(true);
           Console.write(project.description);
-          Console.setBold(false);
         }
+        Console.write("\n");
       }
     });
   } else {
@@ -79,10 +79,12 @@ void runHooks(Directory directory) {
   Console.setBold(true);
   Console.write("Running Project Hooks");
   Console.setBold(false);
-  Console.write(" [ ]");
-  Console.moveCursorBack(2);
   
-  bar.start();
+  if (!verbose) {
+    Console.write(" [ ]");
+    Console.moveCursorBack(2);
+    bar.start();
+  }
 
   var hooks = new File("${directory.path}/tool/hooks.dart");
   var pubspec = new File("${directory.path}/pubspec.yaml");
@@ -101,11 +103,17 @@ void runHooks(Directory directory) {
 
     if (hookConfig['fetchDependencies'] == true) {
       future = Process.start("pub", ["get"], includeParentEnvironment: true, workingDirectory: directory.path).then((process) {
-        if (verbose) inheritIO(process);
+        if (verbose) {
+          print("");
+          inheritIO(process, lineBased: false);
+        }
         return process.exitCode;
       }).then((code) {
         if (code != 0) {
-          bar.stop(format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}"));
+          var out = format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}");
+          if (!verbose) {
+            bar.stop(out);
+          }
           print("ERROR: Failed to fetch dependencies.");
           exit(1);
         }
@@ -116,18 +124,27 @@ void runHooks(Directory directory) {
   future.then((_) {
     if (hooks.existsSync() && hookConfig['script'] == true) {
       return Process.start("dart", [hooks.path], includeParentEnvironment: true, workingDirectory: directory.path).then((process) {
-        if (verbose) inheritIO(process);
+        if (verbose) {
+          print("");
+          inheritIO(process, lineBased: false);
+        }
         return process.exitCode;
       }).then((code) {
         if (code != 0) {
-          bar.stop(format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}"));
+          var out = format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}");
+          if (!verbose) {
+            bar.stop(out);
+          }
           print("ERROR: Hook Script exited with code: ${code}");
           exit(1);
         }
       });
     }
   }).then((_) {
-    bar.stop(format("{{color:green}}${Icon.CHECKMARK}{{color:normal}}"));
+    var out = format("{{color:green}}${Icon.CHECKMARK}{{color:normal}}");
+    if (!verbose) {
+      bar.stop(out);
+    }
     exit(0);
   });
 }
@@ -144,19 +161,31 @@ Future clone(String url, String directory) {
   Console.setBold(true);
   Console.write("Fetching Project");
   Console.setBold(false);
-  Console.write(" [ ]");
-  Console.moveCursorBack(2);
-  return Process.start("git", ["clone", url, directory], includeParentEnvironment: true, runInShell: true).then((process) {
-    bar.start();
+  
+  if (!verbose) {
+    Console.write(" [ ]");
+    Console.moveCursorBack(2);
+  }
+  
+  return Process.start("git", ["clone", url, directory, "--progress"], includeParentEnvironment: true, runInShell: true).then((process) {
+    if (verbose) {
+      print("");
+      inheritIO(process, lineBased: false);
+    } else {
+      bar.start();
+    }
     return process.exitCode;
   }).then((code) {
     if (code != 0) {
-      bar.stop(format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}"));
+      var out = format("{{color:red}}${Icon.BALLOT_X}{{color:normal}}");
+      if (!verbose) {
+        bar.stop(out);
+      }
       exit(1);
     }
-    Console.setBold(true);
-    bar.stop(format("{{color:green}}${Icon.CHECKMARK}{{color:normal}}"));
-    Console.setBold(false);
+    if (!verbose) {
+      bar.stop(format("{{color:green}}${Icon.CHECKMARK}{{color:normal}}"));
+    }
     return new Future.value(null);
   });
 }
