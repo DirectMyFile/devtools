@@ -9,7 +9,7 @@ import "package:devtools/dcget.dart" as DCGet;
 
 import "package:devtools/util.dart";
 
-const String DART_MINIMAL_VERSION = "1.6.0-dev";
+const String DART_CONSTRAINT = ">=1.6.0-dev <1.7.0";
 
 void main(List<String> args) {
   checkEnvironment();
@@ -59,9 +59,10 @@ void checkEnvironment() {
   }
   
   var dartVersion = new Version.parse(Platform.version.split("(")[0].trim());
-  var required = new Version.parse(DART_MINIMAL_VERSION);
-  if (dartVersion < required) {
-    print("Sorry, devtools requires Dart >=${DART_MINIMAL_VERSION}");
+  var constraint = new VersionConstraint.parse(DART_CONSTRAINT);
+  
+  if (constraint.allows(dartVersion)) {
+    print("ERROR: devtools requires Dart '${DART_CONSTRAINT}', but you have ${dartVersion}");
     exit(1);
   }
 }

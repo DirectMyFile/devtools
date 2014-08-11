@@ -201,6 +201,7 @@ class VersionRange implements VersionConstraint {
     throw new ArgumentError('Unknown VersionConstraint type $other.');
   }
 
+  @override
   String toString() {
     var buffer = new StringBuffer();
 
@@ -227,5 +228,7 @@ class _EmptyVersion implements VersionConstraint {
   bool get isAny => false;
   bool allows(Version other) => false;
   VersionConstraint intersect(VersionConstraint other) => this;
+  
+  @override
   String toString() => '<empty>';
 }
