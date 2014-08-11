@@ -115,7 +115,6 @@ void runHooks(Directory directory) {
 
   future.then((_) {
     if (hooks.existsSync() && hookConfig['script'] == true) {
-      print("Hook Script");
       return Process.start("dart", [hooks.path], includeParentEnvironment: true, workingDirectory: directory.path).then((process) {
         if (verbose) inheritIO(process);
         return process.exitCode;
