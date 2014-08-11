@@ -27,7 +27,7 @@ class ProgressBar {
     
     var out = new StringBuffer(before);
     
-    for (int x = 0; x < count -1; x++)
+    for (int x = 1; x < count; x++)
       out.write("=");
     
     out.write(">");
@@ -36,6 +36,13 @@ class ProgressBar {
       out.write(" ");
     
     out.write(after);
+    
+    if (out.length - 1 == stdout.terminalColumns) {
+      var it = out.toString();
+          
+      out.clear();
+      out.write(it.substring(0, it.length - 2) + "]"); 
+    }
     
     Console.overwriteLine(out.toString());
   }
