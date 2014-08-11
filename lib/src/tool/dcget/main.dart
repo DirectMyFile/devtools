@@ -8,7 +8,7 @@ void execute(List<String> args) {
   var argp = new ArgParser();
   argp.addFlag("list", abbr: "l", help: "List Projects", negatable: false);
   argp.addOption("directory", abbr: "d", help: "Directory to Clone To");
-  argp.addFlag("hooks", abbr: "h", help: "Run Project Hooks", defaultsTo: true, negatable: true);
+  argp.addFlag("no-hooks", abbr: "n", help: "Disable Project Hooks", defaultsTo: false, negatable: false);
   argp.addFlag("verbose", abbr: "v", help: "Verbose Output", defaultsTo: false, negatable: false);
 
   ArgResults opts;
@@ -46,7 +46,7 @@ void execute(List<String> args) {
     var project = rest.first;
 
     var dir = new Directory(opts['directory'] != null ? opts['directory'] : project).absolute;
-    getProject(project, dir, opts['hooks']);
+    getProject(project, dir, !opts['no-hooks']);
   }
 }
 
@@ -204,5 +204,7 @@ Future<List<Repository>> fetchProjects() {
 
 void printUsage(ArgParser argp) {
   print("Usage: dcget [options] <project>");
-  stdout.write(argp.getUsage());
+  print (argp.getUsage());
+  stdin.echoMode = true;
+  stdin.lineMode = true;
 }
