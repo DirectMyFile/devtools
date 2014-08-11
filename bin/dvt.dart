@@ -61,7 +61,7 @@ void checkEnvironment() {
   var dartVersion = new Version.parse(Platform.version.split("(")[0].trim());
   var constraint = new VersionConstraint.parse(DART_CONSTRAINT);
   
-  if (constraint.allows(dartVersion)) {
+  if (!constraint.allows(dartVersion)) {
     print("ERROR: devtools requires Dart '${DART_CONSTRAINT}', but you have ${dartVersion}");
     exit(1);
   }
