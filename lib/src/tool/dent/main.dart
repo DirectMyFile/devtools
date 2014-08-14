@@ -1,8 +1,7 @@
 part of devtools.tool.dent;
 
 void execute(List<String> args) {
-  var argp = new ArgParser();
-  argp.addFlag("help", abbr: "h", help: "Prints this Help Message", negatable: false);
+  var argp = createArgumentParser();
   argp.addFlag("warn", abbr: "w", help: "Toggles Warnings", defaultsTo: true);
   argp.addFlag("prefix", abbr: "p", help: "Toggles Prefixes for Logging", defaultsTo: true);
   argp.addFlag("explain", abbr: "e", help: "Toggles Explaining what we are checking for", defaultsTo: true);

@@ -4,8 +4,10 @@ import "dart:async";
 import "dart:io";
 import "dart:math";
 
+import "package:args/args.dart";
 import "package:collection/equality.dart";
 
+part 'src/util/args.dart';
 part 'src/util/executables.dart';
 part 'src/util/yaml.dart';
 part 'src/util/projects.dart';

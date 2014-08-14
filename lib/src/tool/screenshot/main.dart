@@ -53,5 +53,6 @@ void execute(List<String> args) {
       print("ERROR: Failed to upload to Imgur! Status Code: ${response.statusCode}");
       exit(1);
     }
+    exit(0);
   });
 }
