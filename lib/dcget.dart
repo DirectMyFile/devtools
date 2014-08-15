@@ -4,7 +4,7 @@ import "dart:async";
 import "dart:io";
 
 import "package:args/args.dart";
-import "package:github/client.dart";
+import "package:github/client.dart" as gh;
 import "package:devtools/console.dart";
 import "package:yaml/yaml.dart";
 

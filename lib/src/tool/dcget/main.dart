@@ -1,7 +1,7 @@
 part of devtools.tool.dcget;
 
 bool verbose = false;
-GitHub github;
+gh.GitHub github;
 
 void execute(List<String> args) {
   stdin.echoMode = false;
@@ -167,7 +167,7 @@ void runHooks(Directory directory) {
 
 void initializeClient() {
   if (github == null) {
-    github = new GitHub(auth: new Authentication.withToken(GITHUB_TOKEN));
+    github = new gh.GitHub(auth: new gh.Authentication.withToken(GITHUB_TOKEN));
   }
 }
 
@@ -207,7 +207,7 @@ Future clone(String url, String directory) {
   });
 }
 
-Future<List<Repository>> fetchProjects() {
+Future<List<gh.Repository>> fetchProjects() {
   initializeClient();
   return github.userRepositories(ORGANIZATION_NAME);
 }
