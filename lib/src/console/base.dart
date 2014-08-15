@@ -1,5 +1,7 @@
 part of devtools.console;
 
+Logger _logger = new Logger("Console");
+
 class Console {
   static const String ANSI_ESCAPE = "\x1b[";
   static bool _registeredCTRLC = false;
@@ -12,9 +14,13 @@ class Console {
   static void init() {
     if (initialized) return;
     
+    _logger.fine("Initializing");
+    
     initialized = true;
     if (Platform.isLinux) {
+      _logger.fine("Platform is Linux");
       TERM = Platform.environment["TERM"];
+      _logger.fine("TERM is ${TERM}");
     }
   }
   
@@ -34,6 +40,7 @@ class Console {
   }
 
   static void setTextColor(int id, {bool xterm: false, bool bright: false}) {
+    _logger.fine("Setting Text Color (id: ${id}, xterm: ${xterm}, bright: ${bright})");
     Color color;
     if (xterm) {
       var c = id.clamp(0, 256);
@@ -54,7 +61,9 @@ class Console {
   static Color getBackgroundColor() => _currentBackgroundColor;
 
   static void hideCursor() {
+    _logger.fine("Hiding Cursor");
     if (!_registeredCTRLC) {
+      _logger.fine("Registering CTRL+C Hook");
       ProcessSignal.SIGINT.watch().listen((signal) {
         showCursor();
         exit(0);
@@ -63,9 +72,13 @@ class Console {
     }
     writeANSI("?25l");
   }
-  static void showCursor() => writeANSI("?25h");
+  static void showCursor() {
+    _logger.fine("Showing Cursor");
+    writeANSI("?25h");
+  }
   
   static void setBackgroundColor(int id, {bool xterm: false, bool bright: false}) {
+    _logger.fine("Setting Background Color (id: ${id}, xterm: ${xterm}, bright: ${bright})");
     Color color;
     if (xterm) {
       var c = id.clamp(0, 256);
@@ -83,6 +96,7 @@ class Console {
   }
 
   static void centerCursor({bool row: true}) {
+    _logger.fine("Centering Cursor (row: ${row})");
     if (row) {
       var column = (stdout.terminalColumns / 2).round();
       var row = (stdout.terminalLines / 2).round();
@@ -93,6 +107,7 @@ class Console {
   }
 
   static void moveCursor({int row, int column}) {
+    _logger.fine("Moving Cursor (row: ${row}, column: ${column})");
     var out = "";
     if (row != null) {
       out += row.toString();
@@ -124,16 +139,19 @@ class Console {
     stdin.lineMode = true;
     _currentTextColor = null;
     _currentBackgroundColor = null;
+    _logger.fine("Reset Everything");
   }
   
   static void resetTextColor() {
     sgr(39);
     _currentTextColor = null;
+    _logger.fine("Reset Text Color");
   }
   
   static void resetBackgroundColor() {
     sgr(49);
     _currentBackgroundColor = null;
+    _logger.fine("Reset Background Color");
   }
 
   static void sgr(int id, [List<int> params]) {
@@ -171,6 +189,7 @@ class Console {
   
   
   static CursorPosition getCursorPosition() {
+    _logger.fine("Getting Cursor Position");
     var lm = stdin.lineMode;
     var em = stdin.echoMode;
     

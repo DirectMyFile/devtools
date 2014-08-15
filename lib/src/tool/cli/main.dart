@@ -26,7 +26,7 @@ void update() {
     var split = command.split(" ");
     var cmd = split[0];
     var args = new List.from(split)..removeAt(0);
-    var result = Process.runSync(cmd, args, workingDirectory: toolDir.path);
+    var result = Process.runSync(cmd, args, workingDirectory: findDevToolsHome().path);
     if (result.exitCode != 0) {
       fail(result);
     }
@@ -48,7 +48,7 @@ void update() {
 }
 
 void version(bool window) {
-  var version = loadYaml(file("pubspec.yaml", toolDir).readAsStringSync())['version'] as String;
+  var version = loadYaml(file("pubspec.yaml", findDevToolsHome()).readAsStringSync())['version'] as String;
   if (!window) {
     Console.setBold(true);
     print("devtools v${version}");

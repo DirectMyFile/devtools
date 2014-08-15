@@ -24,7 +24,7 @@ Future<int> dent(int code) {
   prefix = getBoolOption("dent", "prefix", defaultValue: false);
   
   printToolInfo("Dent", "Lints your project's structure");
-  var args = [file("bin/dvt.dart", toolDir).path, "dent", "--directory=${directory.path}"];
+  var args = [file("bin/dvt.dart", findDevToolsHome()).path, "dent", "--directory=${directory.path}"];
   
   if (!explain) {
     args.add("--no-explain");

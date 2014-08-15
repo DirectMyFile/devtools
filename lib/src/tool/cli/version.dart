@@ -7,7 +7,7 @@ class VersionWindow extends Window {
   
   @override
   void initialize() {
-    version = loadYaml(file("pubspec.yaml", toolDir).readAsStringSync())['version'] as String;
+    version = loadYaml(file("pubspec.yaml", findDevToolsHome()).readAsStringSync())['version'] as String;
   }
   
   @override

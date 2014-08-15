@@ -4,6 +4,8 @@ import "dart:async";
 import "dart:convert";
 import "dart:io";
 
+import "package:logging/logging.dart";
+
 import "package:quiver/strings.dart" as StringUtils;
 
 import "package:devtools/util.dart";
