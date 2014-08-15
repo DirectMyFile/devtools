@@ -17,5 +17,6 @@ dependencies:
   yaml: '>=2.0.0 <2.2.0'
 dev_dependencies:
   hop: '>=0.31.0+1 <0.32.0'
+  unittest: '>=0.11.0+4 <0.12.0'
 dependency_overrides:
   args: '>=0.12.0 <0.15.0'

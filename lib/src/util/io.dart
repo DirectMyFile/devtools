@@ -10,6 +10,15 @@ File file(String path, [Directory directory]) {
   return new File(path);
 }
 
-Directory get toolDir => new File.fromUri(Platform.script).parent.parent;
+Directory findDevToolsHome() {
+  var directory = new File.fromUri(Platform.script).parent;
+  while (!new File("${directory.path}/pubspec.yaml").existsSync()) {
+    if (directory == null) {
+      throw new Exception("Unable to find the devtools home");
+    }
+    directory = directory.parent;
+  }
+  return directory;
+}
 
 bool fileExists(String path) => new File(path).existsSync();
