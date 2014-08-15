@@ -18,3 +18,5 @@ part 'src/util/functions.dart';
 part 'src/util/version/base.dart';
 part 'src/util/version/constraint.dart';
 part 'src/util/observe.dart';
+part 'src/util/streams.dart';
+part 'src/util/queue.dart';
