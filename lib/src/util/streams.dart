@@ -37,10 +37,10 @@ class SkipNulls<T> implements StreamTransformer<T, T> {
   Stream<T> bind(Stream<T> stream) => stream.where((it) => it != null);
 }
 
-class Matching implements StreamTransformer<String, String> {
+class StringsMatching implements StreamTransformer<String, String> {
   final RegExp expression;
   
-  Matching(this.expression);
+  StringsMatching(this.expression);
 
   @override
   Stream<String> bind(Stream<String> stream) =>
