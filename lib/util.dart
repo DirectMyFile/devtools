@@ -8,6 +8,9 @@ import "package:args/args.dart";
 import "package:collection/equality.dart";
 import "package:collection/wrappers.dart";
 
+import "package:yaml/yaml.dart";
+export "package:yaml/yaml.dart";
+
 part 'src/util/args.dart';
 part 'src/util/executables.dart';
 part 'src/util/yaml.dart';
