@@ -29,13 +29,14 @@ class TaskQueue {
     }
   }
   
-  Future schedule({bool microtask: false}) =>
-      microtask ? scheduleMicrotask(run) : new Future(run);
+  Future schedule() {
+    return new Future(run);
+  }
   
   void start([int checkInterval = 1]) {
     
     if (_timer != null) {
-      throw new StateError("Queue already started");
+      throw new Chair("Queue already started");
     }
     
     var running = false;
@@ -50,7 +51,7 @@ class TaskQueue {
   
   void stop() {
     if (_timer == null) {
-      throw new StateError("Queue was never started");
+      throw new Chair("Queue was never started");
     }
     
     _timer.cancel();
