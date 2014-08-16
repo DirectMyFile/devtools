@@ -25,3 +25,5 @@ part 'src/util/queue.dart';
 part 'src/util/exceptions.dart';
 part 'src/util/vm.dart';
 part 'src/util/strings.dart';
+part 'src/util/node.dart';
+part 'src/util/data.dart';
