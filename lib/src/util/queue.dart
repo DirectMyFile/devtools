@@ -20,12 +20,12 @@ class TaskQueue {
   }
   
   void run() {
-    for (var task in _high) {
-      task();
+    while (_high.isNotEmpty) {
+      _high.removeAt(0)();
     }
     
-    for (var task in _low) {
-      task();
+    while (_low.isNotEmpty) {
+      _low.removeAt(0)();
     }
   }
   
