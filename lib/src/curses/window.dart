@@ -29,11 +29,11 @@ abstract class Window {
     var width = stdout.terminalColumns;
     Console.moveCursorUp(stdout.terminalLines);
     Console.setBackgroundColor(7, bright: true);
-    repeat((i) => Console.write(" "), width);
+    repeatFunction((i) => Console.write(" "), width);
     Console.setTextColor(0);
     Console.moveCursor(row: 1, column: (stdout.terminalColumns / 2).round() - (title.length / 2).round());
     Console.write(title);
-    repeat((i) => Console.write("\n"), stdout.terminalLines - 1);
+    repeatFunction((i) => Console.write("\n"), stdout.terminalLines - 1);
     Console.moveCursor(row: 2, column: 1);
     Console.centerCursor(row: true);
   }
