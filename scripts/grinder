@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
- if [ ! -f pubspec.yaml ]
+if [ -z ${DART_SDK} ]
+then
+  export DART_SDK=$(dirname $(dirname `which dart`))
+fi
+
+if [ ! -f pubspec.yaml ]
 then
   echo "ERROR: Couldn't find a pubspec.yaml"
   exit 1
@@ -16,13 +21,13 @@ SCRIPT="./tool/build.dart"
 
 if [ ! -f ${SCRIPT} ]
 then
-	if [ -f grind ]
-	then
-		SCRIPT="./grind"
-	else
-		echo "ERROR: Failed to find build script."
-		exit 1
-	fi
+  if [ -f grind ]
+  then
+    SCRIPT="./grind"
+  else
+    echo "ERROR: Failed to find build script."
+    exit 1
+  fi
 fi
 
 ${SCRIPT} ${@}
