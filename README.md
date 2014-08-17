@@ -2,10 +2,12 @@
 
 Tools for Developing Software
 
-devtools is only supported on Linux.
+## Getting Started
 
-## Installing on Linux
+Execute the following:
 
-The minimum requirements is to have bash installed, most systems already do.<br/>
-Add the `scripts` directory in the repository to your `$PATH` and you're done!<br/>
-You should now be able to run `dvt` anywhere on the terminal.
+```bash
+curl --silent https://raw.githubusercontent.com/DirectMyFile/devtools/master/tool/install.sh | bash
+```
+
+That will add devtools to your path (works for bash and fish).
