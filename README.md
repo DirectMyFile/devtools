@@ -2,6 +2,14 @@
 
 Tools for Developing Software
 
+## Tools
+
+- dcget: Fetches DirectCode Projects
+- dent: Lint Projects for Contributor Friction
+- doublecheck: Lints Projects for any issues
+- pubget: Generates a pubspec.yaml
+- screenshot: Take Screenshots and upload them to Imgur
+
 ## Getting Started
 
 Execute the following:
