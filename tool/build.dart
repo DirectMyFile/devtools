@@ -1,34 +1,32 @@
-#!/usr/bin/env dart
-import "dart:async";
+library build;
+
+import 'dart:async';
 import "dart:io";
 
-var packages_dir = new Directory("packages/");
+import "package:grinder/grinder.dart";
+import 'package:yaml/yaml.dart';
+
+part 'docgen.dart';
+part 'utils.dart';
+part 'version.dart';
+part 'analyze.dart';
+part 'config.dart';
 
 void main(List<String> args) {
-  var future = new Future.value(null);
+  init();
 
-  if (!packages_dir.existsSync()) {
-    future = execute("pub get");
-  }
-
-  future.then((_) {
-    var argz = (args.length > 0 ? " " : "") + args.join(" ");
-    return execute("dart --checked tool/hop_runner.dart --color${argz}");
+  task("docs", createDocGenTask(".", out_dir: parse_config_value(getvar("docs.output"))));
+  task("analyze", createAnalyzerTask(getvar("analyzer.files").map(parse_config_value)));
+  task("test", (context) {
+    runDartScript(context, getvar("test.file", "test/run.dart"));
   });
+  task("version", createVersionTask());
+  task("publish", (context) {
+    runSdkBinary(context, "pub", arguments: ["publish", "-f"]);
+  }, depends: ["version"]);
+  task("check", (_) {}, depends: getvar("check.tasks").map(parse_config_value).toList());
+
+  startGrinder(args);
 }
 
-dynamic execute(String cmdline) {
-  var split = cmdline.split(" ");
-  var command = split[0];
-  split.remove(command);
-  var args = split;
-  return Process.start(command, args).then((Process process) {
-    stdout.addStream(process.stdout);
-    stderr.addStream(process.stderr);
-    return process.exitCode;
-  }).then((int exitCode) {
-    if (exitCode != 0) {
-      exit(exitCode);
-    }
-  });
-}
+void task(String name, TaskFunction function, {List<String> depends}) => defineTask(name, taskFunction: function, depends: depends);

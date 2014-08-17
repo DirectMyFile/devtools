@@ -1,4 +1,4 @@
-part of hop_runner;
+part of build;
 
 Future<int> inheritIO(Process process) {
   process.stdin.addStream(stdin);

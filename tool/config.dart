@@ -1,4 +1,4 @@
-part of hop_runner;
+part of build;
 
 Map<String, dynamic> config;
 

@@ -1,9 +1,9 @@
-part of hop_runner;
+part of build;
 
 var VERSION_REGEX = new RegExp(r"^(\d+)\.(\d+)\.(\d+)$");
 
-Task createVersionTask() {
-  return new Task((TaskContext ctx) {
+TaskFunction createVersionTask() {
+  return (GrinderContext context) {
     var file = new File("pubspec.yaml");
     return new Future(() {
       var content = file.readAsStringSync();
@@ -12,24 +12,20 @@ Task createVersionTask() {
       var readme = new File("README.md");
 
       var next = null;
-
-      if (ctx.arguments.rest.length != 1) {
-        try {
-          next = incrementVersion(old);
-        } catch (e) {
-          ctx.fail("${e}");
-          return;
-        }
-      } else {
-        next = ctx.arguments.rest[0];
+      
+      try {
+        next = incrementVersion(old);
+      } catch (e) {
+        context.fail("${e}");
+        return;
       }
 
       content = content.replaceAll(old, next);
       readme.writeAsStringSync(readme.readAsStringSync().replaceAll(old, next));
       file.writeAsStringSync(content);
-      ctx.info("Updated Version: v${old} => v${next}");
+      context.log("Updated Version: v${old} => v${next}");
     });
-  }, description: "Updates the Version");
+  };
 }
 
 String incrementVersion(String old) {

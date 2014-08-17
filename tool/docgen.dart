@@ -1,7 +1,7 @@
-part of hop_runner;
+part of build;
 
-Task createDocGenTask(String path, {compile: false, Iterable<String> excludes: null, include_sdk: true, include_deps: false, out_dir: "docs", verbose: false}) {
-  return new Task((TaskContext context) {
+TaskFunction createDocGenTask(String path, {compile: false, Iterable<String> excludes: null, include_sdk: true, include_deps: false, out_dir: "docs", verbose: false}) {
+  return (GrinderContext context) {
     var args = [];
 
     if (verbose) {
@@ -10,7 +10,6 @@ Task createDocGenTask(String path, {compile: false, Iterable<String> excludes: n
 
     if (excludes != null) {
       for (String exclude in excludes) {
-        context.fine("Excluding Library: ${exclude}");
         args.add("--exclude-lib=${exclude}");
       }
     }
@@ -25,11 +24,7 @@ Task createDocGenTask(String path, {compile: false, Iterable<String> excludes: n
 
     args.add("--out=${out_dir}");
 
-    args.addAll(context.arguments.rest);
-
     args.add(path);
-
-    context.fine("using argments: ${args}");
 
     return Process.start("docgen", args).then((process) {
       return inheritIO(process);
@@ -38,7 +33,7 @@ Task createDocGenTask(String path, {compile: false, Iterable<String> excludes: n
         context.fail("docgen exited with the status code ${code}");
       }
     });
-  }, description: "Generates Documentation");
+  };
 }
 
 String _flag(String it, bool flag) => flag ? it : "--no-" + it;
