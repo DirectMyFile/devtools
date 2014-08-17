@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -e
+
+ if [ ! -f pubspec.yaml ]
+then
+  echo "ERROR: Couldn't find a pubspec.yaml"
+  exit 1
+fi
+
+if [ ! -d packages ]
+then
+  pub get
+fi
+
+SCRIPT="./tool/build.dart"
+
+if [ ! -f ${SCRIPT} ]
+then
+	if [ -f grind ]
+	then
+		SCRIPT="./grind"
+	else
+		echo "ERROR: Failed to find build script."
+		exit 1
+	fi
+fi
+
+${SCRIPT} ${@}
