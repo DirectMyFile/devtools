@@ -9,8 +9,6 @@ import "package:devtools/dcget.dart" as DCGet;
 
 import "package:devtools/util.dart";
 
-const String DART_CONSTRAINT = ">=1.6.0-dev <1.7.0";
-
 void main(List<String> args) {
   checkEnvironment();
   
@@ -55,14 +53,6 @@ void checkEnvironment() {
   
   if (Platform.isAndroid) {
     print("Sorry, devtools is not yet supported on Android due to platform limitations.");
-    exit(1);
-  }
-  
-  var dartVersion = new Version.parse(Platform.version.split("(")[0].trim());
-  var constraint = new VersionConstraint.parse(DART_CONSTRAINT);
-  
-  if (!constraint.allows(dartVersion)) {
-    print("ERROR: devtools requires Dart '${DART_CONSTRAINT}', but you have ${dartVersion}");
     exit(1);
   }
 }
